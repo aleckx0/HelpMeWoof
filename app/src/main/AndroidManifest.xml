@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HelpMeWoof">
         <activity
+            android:name=".IniciarSesionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegistrarseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AuthActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main"
