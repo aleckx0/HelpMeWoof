@@ -9,4 +9,9 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="iniciarsesionpantalla">Iniciar Sesion</string>
+    <string name="registropantalla">Registrarse</string>
+    <string name="btn_iniciarsesion">Iniciar Sesion</string>
+    <string name="btn_registrarsesesion">Registrarse</string>
 </resources>
