@@ -5,10 +5,15 @@
       <map>
         <entry key="..\:/Users/OMEN/StudioProjects/HelpMeWoof/app/src/main/res/layout/activity_ayuda.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/OMEN/StudioProjects/HelpMeWoof/app/src/main/res/layout/activity_menu_acceso.xml" value="0.4" />
+        <entry key="..\:/Users/OMEN/StudioProjects/HelpMeWoof/app/src/main/res/layout/app_bar_menu_acceso.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/OMEN/StudioProjects/HelpMeWoof/app/src/main/res/layout/content_menu_acceso.xml" value="0.1933876811594203" />
+        <entry key="..\:/Users/OMEN/StudioProjects/HelpMeWoof/app/src/main/res/layout/fragment_gallery.xml" value="0.22083333333333333" />
+        <entry key="..\:/Users/OMEN/StudioProjects/HelpMeWoof/app/src/main/res/layout/fragment_home.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/OMEN/StudioProjects/HelpMeWoof/app/src/main/res/layout/fragment_slideshow.xml" value="0.1585144927536232" />
+        <entry key="..\:/Users/OMEN/StudioProjects/HelpMeWoof/app/src/main/res/layout/nav_header_menu_acceso.xml" value="0.4" />
         <entry key="..\:/Users/OMEN/StudioProjects/HelpMeWoof/app/src/main/res/layout/switch_item.xml" value="0.22083333333333333" />
         <entry key="..\:/Users/OMEN/StudioProjects/HelpMeWoof/app/src/main/res/menu/activity_main_drawer.xml" value="0.536" />
+        <entry key="..\:/Users/OMEN/StudioProjects/HelpMeWoof/app/src/main/res/menu/menu_acceso.xml" value="0.22083333333333333" />
       </map>
     </option>
   </component>
