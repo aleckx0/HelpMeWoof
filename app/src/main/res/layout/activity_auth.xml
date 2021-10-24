@@ -37,7 +37,11 @@
                 android:layout_weight="1"
                 android:onClick="registrar"
                 android:text="@string/registropantalla"
-                tools:text="@string/registropantalla" />
+                tools:ignore="SpeakableTextPresentCheck" />
+
+
+
+
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
