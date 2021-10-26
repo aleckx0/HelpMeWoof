@@ -17,7 +17,10 @@ import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class AuthActivity extends AppCompatActivity {
-    String permisos[] = {Manifest.permission.CAMERA, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.READ_EXTERNAL_STORAGE};
+    String permisos[] = {Manifest.permission.CAMERA,
+                         Manifest.permission.ACCESS_COARSE_LOCATION,
+                         Manifest.permission.READ_EXTERNAL_STORAGE,
+                         Manifest.permission.INTERNET};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
