@@ -29,7 +29,6 @@ public class Principal extends FragmentActivity implements OnMapReadyCallback {
     private ActivityPrincipalBinding binding;
     private FusedLocationProviderClient fusedLocationClient;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
