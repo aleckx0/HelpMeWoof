@@ -4,83 +4,124 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Formulario"
-    android:background="@drawable/Fondo1">
+    tools:context=".formulariopublicar"
+    android:orientation="horizontal"
+    android:background="@drawable/fondo0">
+
+<!-- Este bloque es para la parte de clasificacion y descripcion -->
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="214dp"
-        android:layout_height="49dp"
-        android:text="Clasificación"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="194dp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="214dp"
-        android:layout_height="49dp"
-        android:text="Descripción"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:id="@+id/idclasifydescrip"
+        android:layout_width="314dp"
+        android:layout_height="35dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Clasificacion y Descripcion"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.025" />
 
     <RadioButton
-        android:id="@+id/radioButton"
-        android:layout_width="141dp"
-        android:layout_height="47dp"
-        android:text="Lomito Perdido"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="22dp"
-        tools:layout_editor_absoluteY="76dp" />
+        android:id="@+id/idperdido"
+        android:layout_width="94dp"
+        android:layout_height="30dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Perdido"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/black"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.023"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.091" />
 
     <RadioButton
-        android:id="@+id/radioButton2"
-        android:layout_width="141dp"
-        android:layout_height="44dp"
-        android:text="Lomito de Calle"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="173dp"
-        tools:layout_editor_absoluteY="76dp" />
+        android:id="@+id/idherido"
+        android:layout_width="94dp"
+        android:layout_height="30dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Herido"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/black"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.678"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.089" />
 
     <RadioButton
-        android:id="@+id/radioButton3"
-        android:layout_width="163dp"
-        android:layout_height="41dp"
-        android:text="Lomito Lastimado"
-        android:textColor="@android:color/white"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="22dp"
-        tools:layout_editor_absoluteY="131dp" />
+        android:id="@+id/idcallejero"
+        android:layout_width="94dp"
+        android:layout_height="30dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="Callejero"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/black"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.337"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.09" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
-        android:layout_width="352dp"
-        android:layout_height="98dp"
+        android:id="@+id/idtextdedescripcion"
+        android:layout_width="342dp"
+        android:layout_height="133dp"
+        android:background="@color/white"
         android:ems="10"
-        android:inputType="textPersonName"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="259dp" />
+        android:gravity="start|top"
+        android:hint="Describe al lomito o al michi"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.187" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="310dp"
-        android:layout_height="203dp"
-        app:srcCompat="@drawable/ic_launcher_foreground"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="378dp" />
+        android:layout_width="274dp"
+        android:layout_height="259dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.623"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="111dp"
-        android:layout_height="45dp"
-        android:text="Publicar"
-        tools:layout_editor_absoluteX="192dp"
-        tools:layout_editor_absoluteY="595dp" />
+        android:id="@+id/idbtncargarimagen"
+        android:layout_width="176dp"
+        android:layout_height="42dp"
+        android:text="Seleccionar Imagen"
+        android:background="@color/purple_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.271"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.84" />
+
 </android.support.constraint.ConstraintLayout>
+
+<!-- NOTAS:
+android:Layoutgravity="center" coloca el cuadro del layour centrado
+android:gravity="center" coloca el texto dentro del cuadro del layout centrado
+wrap_content delimita el texto dentro de un cuadro de layout se puede hacer grande o pequeno
+match_parent toma margenes grandes dejando espacio de sobra en el componente
+android:layout_marginbottom="30dp" deja un margen de espacio abajo para un boton o lo que haya
+<!- android:textColor="@color/black" cambiar color de texto
+
+-->
