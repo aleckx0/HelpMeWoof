@@ -3,7 +3,7 @@ package net.alecks.helpmewoof;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class Formulario extends AppCompatActivity {
+public class formulariopublicar extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

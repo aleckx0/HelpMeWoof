@@ -3,7 +3,7 @@ package net.alecks.helpmewoof;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class Comentario extends AppCompatActivity {
+public class comentario extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
