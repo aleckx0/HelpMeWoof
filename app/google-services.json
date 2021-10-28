@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "630069206263",
-    "project_id": "helpmewoof-ed930",
-    "storage_bucket": "helpmewoof-ed930.appspot.com"
+    "project_number": "49341310622",
+    "project_id": "helpmewoof-44d5e",
+    "storage_bucket": "helpmewoof-44d5e.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:630069206263:android:924e3b973e4ef3d9ae87f2",
+        "mobilesdk_app_id": "1:49341310622:android:377e457aad893fd9d5fd8f",
         "android_client_info": {
           "package_name": "net.alecks.helpmewoof"
         }
       },
       "oauth_client": [
         {
-          "client_id": "630069206263-56bdnd307og3c81nnkutgsmqts8rcdvt.apps.googleusercontent.com",
+          "client_id": "49341310622-ja60fc7tv56fd047uo72m88ir64e3gje.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBE6_5KJH42X0WUEteDDX3B7EFTwjd8Vxk"
+          "current_key": "AIzaSyAXQZdM8x9Z78smkFSKbvs4wFY6nm-nqdc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "630069206263-56bdnd307og3c81nnkutgsmqts8rcdvt.apps.googleusercontent.com",
+              "client_id": "49341310622-ja60fc7tv56fd047uo72m88ir64e3gje.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
