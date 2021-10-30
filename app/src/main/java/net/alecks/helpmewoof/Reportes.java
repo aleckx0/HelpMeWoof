@@ -1,104 +1,81 @@
 package net.alecks.helpmewoof;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
-import android.media.ExifInterface;
+import android.Manifest;
 import android.net.Uri;
-import android.os.Environment;
-import android.provider.MediaStore;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.FileProvider;
 import android.os.Bundle;
-
-import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.util.Log;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
+import android.widget.Toast;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import id.zelory.compressor.Compressor;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Reportes extends AppCompatActivity {
-    final int código_galería = 10;
-    final int código_cámara = 20;
-    Button crearReporte;
-    Button abrirCámara;
-    Button abrirGaleria;
-    Button quitarImagen;
+    //Variables de los elementos del activity
     EditText editTextDescripción;
     CheckBox checkHerido;
     CheckBox checkSituaciónCalle;
     CheckBox checkPerdido;
     ImageView imagen;
-    Uri imgUri = null;
-    Bitmap imgBitmap = null;
-    byte [] imgByte;
-    String ruta;
+    Button abrirCámara;
+    Button abrirGaleria;
+    Button quitarImagen;
+    Button crearReporte;
+    //Variables para cargar a firebase
+    final int código_galería = 10;
+    final int código_cámara = 20;
     DatabaseReference databaseReference;
-    DatabaseReference imagenReference;
-    StorageReference storageReference;
-
+    Uri imgUri;
+    String linkImagen;
+    String nombreImagenCamara;
+    boolean conImagen;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reportes);
-        imagen = (ImageView) findViewById (R.id.imageView);
-        crearReporte = findViewById(R.id.button);
-        abrirCámara = findViewById(R.id.button2);
-        abrirGaleria = findViewById(R.id.button3);
-        quitarImagen = findViewById(R.id.button4);
-
+        //Variables de los elementos del activity
         editTextDescripción = findViewById(R.id.editTextTextMultiLine);
-
         checkHerido = findViewById(R.id.checkBox);
         checkSituaciónCalle = findViewById(R.id.checkBox2);
         checkPerdido = findViewById(R.id.checkBox3);
-
+        imagen = (ImageView) findViewById (R.id.imageView);
+        abrirCámara = findViewById(R.id.button2);
+        abrirGaleria = findViewById(R.id.button3);
+        quitarImagen = findViewById(R.id.button4);
+        crearReporte = findViewById(R.id.button);
+        //Variables para cargar a firebase
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        imagenReference = FirebaseDatabase.getInstance().getReference().child("imagenes_subidas");
-        //storageReference = FirebaseStorage.getInstance().getReference().child("imagen_comprimida");
-
+        Map<String, Object> datosReportes = new HashMap<>();
+        //Solicita los permisos
         if (ContextCompat.checkSelfPermission(Reportes.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(Reportes.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(Reportes.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 1000);
         }
-
         abrirCámara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 camara();
+
             }
         });
-
         abrirGaleria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,148 +86,112 @@ public class Reportes extends AppCompatActivity {
         quitarImagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                conImagen = false;
                 imagen.setImageResource(R.drawable.image);
             }
         });
         crearReporte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String descripción =  editTextDescripción.getText().toString();
-                ArrayList<String> clasificación = new ArrayList<String>();
-                String estado = "Activo";
-
-
-                if  (checkHerido.isChecked()){
-                    clasificación.add(checkHerido.getText().toString());
-                }
-                if  (checkSituaciónCalle.isChecked()){
-                    clasificación.add(checkSituaciónCalle.getText().toString());
-                }
-                if  (checkPerdido.isChecked()){
-                    clasificación.add(checkPerdido.getText().toString());
-                }
-                //List clasificaciónList = new ArrayList<String>(Arrays.asList(clasificación));
-
-                Map<String, Object> datosReportes = new HashMap<>();
-
-                datosReportes.put("descripción",descripción);
-                datosReportes.put("clasificación",clasificación);
-                if  (!imgBitmap.equals(null)){
-                    StorageReference ref = storageReference.child(ruta);
-                    UploadTask uploadTask = ref.putBytes(imgByte);
-                    Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-                        @Override
-                        public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                            if(!task.isSuccessful()){
-                                throw Objects.requireNonNull(task.getException());
-                            }
-                            return ref.getDownloadUrl();
-
+                boolean editTextVacio = editTextDescripción.getText().toString().equals("");
+                if  (!editTextVacio) {
+                    if (checkHerido.isChecked() || checkSituaciónCalle.isChecked() || checkPerdido.isChecked()){
+                        //Se asigna el estado del reporte a Activo
+                        String estado = "Activo";
+                        //Obtenemos la información de descripción
+                        String descripción =  editTextDescripción.getText().toString();
+                        //Creamos un arraylist y guardamos las clasificaciónes seleccionadas
+                        ArrayList clasificación = new ArrayList();
+                        if  (checkHerido.isChecked()){
+                            clasificación.add(checkHerido.getText().toString());
                         }
-                    }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Uri> task) {
-                            Uri downloaduri = task.getResult();
-                            datosReportes.put("imagen", downloaduri);
+                        if  (checkSituaciónCalle.isChecked()){
+                            clasificación.add(checkSituaciónCalle.getText().toString());
                         }
-                    });
+                        if  (checkPerdido.isChecked()){
+                            clasificación.add(checkPerdido.getText().toString());
+                        }
+                        //Enviar datos de un Hashmap a firebase
+                        datosReportes.put("clasificación",clasificación);
+                        datosReportes.put("descripción",descripción);
+                        datosReportes.put("estado",estado);
+                        //Comprobamos si hay imagen para agregarla al Hashmap
+                        if (conImagen) {
+                            datosReportes.put("imagen", linkImagen);
+                        }
+                        databaseReference.child("Reportes").push().setValue(datosReportes);
+                        Toast.makeText(Reportes.this, "Reporte creado correctamente", Toast.LENGTH_SHORT).show();
+                        datosReportes.clear();
+                    }else{
+                        Toast.makeText(Reportes.this, "Es necesario marcar al menos una casilla", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(Reportes.this, "Es necesario agregar una descripción", Toast.LENGTH_SHORT).show();
                 }
-                datosReportes.put("estado",estado);
-                databaseReference.child("Reportes").push().setValue(datosReportes);
-
+                //Aqui termina el proceso, debe regresar a pantalla principal y limpiar el formulario
+                editTextDescripción.setText("");
+                if(checkHerido.isChecked()){
+                    checkHerido.toggle();
+                }
+                if(checkSituaciónCalle.isChecked()){
+                    checkSituaciónCalle.toggle();
+                }
+                if(checkPerdido.isChecked()){
+                    checkPerdido.toggle();
+                }
+                imagen.setImageResource(R.drawable.image);
+                conImagen = false;
             }
         });
-
-
     }
-
     private void camara(){
+        //Abre la camara
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (intent.resolveActivity(getPackageManager()) != null){
-            File fotoArchivo = null;
-            try {
-                fotoArchivo = guardarImagen();
-            }catch (IOException ex){
-                Log.e("error", ex.toString());
-            }
-            if (fotoArchivo != null) {
-                Uri uri = FileProvider.getUriForFile(this, "net.alecks.helpmewoof.fileprovider", fotoArchivo);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
-                startActivityForResult(intent, código_cámara);
-            }
-        }
+        //Crear nombre de la imagen con informacion del tiempo
+        nombreImagenCamara = (System.currentTimeMillis()/1000+".jpg");
+        //Guardar archivo temporal
+        File fotoArchivo = new File(getExternalFilesDir(null),"imagen_"+nombreImagenCamara);
+        imgUri = FileProvider.getUriForFile(this,"net.alecks.helpmewoof.fileprovider", fotoArchivo);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT,imgUri);
+        startActivityForResult(intent,código_cámara);
     }
-
-    private File guardarImagen() throws IOException{
-        String nombreFoto = "foto_";
-        File directorio = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File foto = File.createTempFile(nombreFoto, ".jpg", directorio);
-        ruta = foto.getAbsolutePath();
-        return foto;
-    }
-
     private void galeria () {
+        //Abre la galería y llama al activity result
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(intent.createChooser(intent,"Seleccione la Aplicación"),código_galería);
     }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK){
             switch (requestCode) {
                 case código_galería:
-                    imgUri = data.getData();//
-                    ruta = imgUri.getPath();//
-
-                    File url = new File(ruta);
-                    try {
-                        imgBitmap = new Compressor(this)
-                                .setMaxWidth(640)
-                                .setMaxHeight(480)
-                                .setQuality(90)
-                                .compressToBitmap(url);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                    imgBitmap.compress(Bitmap.CompressFormat.JPEG,90,byteArrayOutputStream);
-                    imgByte = byteArrayOutputStream.toByteArray();
+                    conImagen = true;
+                    //Se obtiene la imagen seleccionada
+                    imgUri = data.getData();
+                    //Indicamos que las imagenes se guadaran en la carpeta ImagenesReportes
+                    StorageReference nombreFolder = FirebaseStorage.getInstance().getReference().child("ImagenesReportes");
+                    //Se establece el nombre de la imagen
+                    StorageReference nombreImagen = nombreFolder.child("imagen"+imgUri.getLastPathSegment() + System.currentTimeMillis()/1000);
+                    //obtiene el link de la imagen
+                    nombreImagen.putFile(imgUri).addOnSuccessListener(taskSnapshot -> nombreImagen.getDownloadUrl().addOnSuccessListener(imgUri -> {
+                        linkImagen = String.valueOf(imgUri);
+                    }));
+                    //Se muestra la imagen en el imageview
                     imagen.setImageURI(imgUri);
-                    break;
+                break;
                 case código_cámara:
-                    //Bundle extras = data.getExtras();
-                    //Bitmap imgBitmap = (Bitmap) extras.get("data");
-
-                    imgBitmap = BitmapFactory.decodeFile(ruta);
-                    System.out.println("ruta: "+ruta);
-                    int height = (imgBitmap.getHeight() * 512 / imgBitmap.getWidth());
-                    Bitmap scale = Bitmap.createScaledBitmap(imgBitmap, 512, height, true);
-                    try {
-                        ExifInterface exif = new ExifInterface(ruta);
-                        int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION,ExifInterface.ORIENTATION_UNDEFINED);
-                        Matrix matrix = new Matrix();
-                        switch  (orientation){
-                            case ExifInterface.ORIENTATION_ROTATE_90:
-                                matrix.postRotate(90);
-                                break;
-                            case ExifInterface.ORIENTATION_ROTATE_180:
-                                matrix.postRotate(180);
-                                break;
-                            case ExifInterface.ORIENTATION_ROTATE_270:
-                                matrix.postRotate(270);
-                                break;
-                        }
-                        Bitmap rotateBitmap = Bitmap.createBitmap(scale,0,0,scale.getWidth(),scale.getHeight(), matrix, true);
-                        imagen.setImageBitmap(rotateBitmap);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-
-                    break;
+                    conImagen = true;
+                    Bitmap imgBitmap = BitmapFactory.decodeFile(getExternalFilesDir(null) + "/imagen_"+nombreImagenCamara);
+                    nombreFolder = FirebaseStorage.getInstance().getReference().child("ImagenesReportes");
+                    nombreImagen = nombreFolder.child(imgUri.getLastPathSegment());
+                    nombreImagen.putFile(imgUri).addOnSuccessListener(taskSnapshot -> nombreImagen.getDownloadUrl().addOnSuccessListener(imgUri -> {
+                        linkImagen = String.valueOf(imgUri);
+                    }));
+                    imagen.setImageBitmap(imgBitmap);
+                break;
             }
-       }
+        }
     }
 }
