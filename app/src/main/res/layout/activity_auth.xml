@@ -18,7 +18,7 @@
 
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/barrin"
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
@@ -43,30 +43,54 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true">
 
-        <LinearLayout
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_weight="1">
 
-            <Button
-                android:id="@+id/iniciarsesionpantalla"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="iriniciar"
-                android:text="@string/iniciarsesionpantalla"
-                tools:text="@string/iniciarsesionpantalla" />
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
 
-            <Button
-                android:id="@+id/registropantalla"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:onClick="registrar"
-                android:text="@string/registropantalla"
-                tools:ignore="SpeakableTextPresentCheck" />
+                <Button
+                    android:id="@+id/registropantalla"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="registrar"
+                    android:text="@string/registropantalla"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </TableRow>
 
-        </LinearLayout>
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <Button
+                    android:id="@+id/iniciarsesionpantalla"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="iriniciar"
+                    android:text="@string/iniciarsesionpantalla"
+                    tools:text="@string/iniciarsesionpantalla" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <Button
+                    android:id="@+id/noty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:onClick="notificacion"
+                    android:text="Mostrar Notificacion" />
+            </TableRow>
+
+        </TableLayout>
 
     </com.google.android.material.navigation.NavigationView>
 
