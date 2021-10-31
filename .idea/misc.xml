@@ -3,6 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/alex_/Documents/AndroidStudioProjects/HelpMeWoof/app/src/main/res/drawable/side_menu.xml" value="0.3828125" />
+        <entry key="..\:/Users/alex_/Documents/AndroidStudioProjects/HelpMeWoof/app/src/main/res/layout/activity_auth.xml" value="0.32439678284182305" />
+        <entry key="..\:/Users/alex_/Documents/AndroidStudioProjects/HelpMeWoof/app/src/main/res/layout/activity_iniciar_sesion.xml" value="0.2796296296296296" />
+        <entry key="..\:/Users/alex_/Documents/AndroidStudioProjects/HelpMeWoof/app/src/main/res/layout/activity_navegacion.xml" value="0.12105263157894737" />
+        <entry key="..\:/Users/alex_/Documents/AndroidStudioProjects/HelpMeWoof/app/src/main/res/layout/app_bar_navegacion.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/alex_/Documents/AndroidStudioProjects/HelpMeWoof/app/src/main/res/layout/content_navegacion.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/alex_/Documents/AndroidStudioProjects/HelpMeWoof/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/alex_/Documents/AndroidStudioProjects/HelpMeWoof/app/src/main/res/menu/activity_main_drawer.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/alex_/Documents/AndroidStudioProjects/HelpMeWoof/app/src/main/res/menu/navegacion.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/alex_/Documents/AndroidStudioProjects/HelpMeWoof/app/src/main/res/menu/opciones_menu.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/ruddy/AndroidStudioProjects/HelpMeWoof/app/src/main/res/layout/activity_auth.xml" value="0.25" />
         <entry key="..\:/Users/ruddy/AndroidStudioProjects/HelpMeWoof/app/src/main/res/layout/activity_iniciar_sesion.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/ruddy/AndroidStudioProjects/HelpMeWoof/app/src/main/res/layout/activity_registrarse.xml" value="0.20416666666666666" />

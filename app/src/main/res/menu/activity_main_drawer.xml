@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/registropantalla"
+            android:icon="@drawable/sign_up"
+            android:onClick="registrar"
+            android:title="@string/registropantalla"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <item
+            android:id="@+id/iniciarsesionpantalla"
+            android:icon="@drawable/sign_in"
+            android:onClick="iriniciar"
+            android:title="@string/iniciarsesionpantalla"
+            tools:text="@string/iniciarsesionpantalla" />
+
+
+    </group>
+</menu>
