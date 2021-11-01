@@ -5,11 +5,17 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -18,16 +24,31 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import net.alecks.helpmewoof.databinding.ActivityPrincipalBinding;
 
-public class Principal extends FragmentActivity implements OnMapReadyCallback {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Principal extends FragmentActivity implements OnMapReadyCallback, View.OnClickListener {
 
     private GoogleMap mMap;
     private ActivityPrincipalBinding binding;
     private FusedLocationProviderClient fusedLocationClient;
+    DatabaseReference databaseReference;
+    private int MY_PERMISSIONS_REQUEST_READ_CONTACTS;
+    private Button btn_reporte;
+    private ArrayList<Marker> tmpRealtimeMarker = new ArrayList<>();
+    private ArrayList<Marker> realTimeMarkers = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +66,60 @@ public class Principal extends FragmentActivity implements OnMapReadyCallback {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PackageManager.PERMISSION_GRANTED);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        databaseReference = FirebaseDatabase.getInstance().getReference();
+        UploadData();
+        btn_reporte = findViewById(R.id.button_report);
+        btn_reporte.setOnClickListener(this);
+        countDownTimer();
     }
+
+    private void countDownTimer(){
+        new CountDownTimer(10000, 1000) {
+            @Override
+            public void onTick(long l) {
+                Log.e("Segundos restantes: ", "" + l / 1000);
+            }
+
+            @Override
+            public void onFinish() {
+                Toast.makeText(Principal.this, "Marcadores Actualizados", Toast.LENGTH_SHORT).show();
+                onMapReady(mMap);
+            }
+        }
+        .start();
+    }
+
+    private void UploadData() {
+        if (ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
+                (this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(Principal.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+            return;
+        }
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, location -> {
+                    // Got last known location. In some rare situations this can be null.
+                    if (location != null) {
+                        // Logic to handle location object
+                        Log.e("Latitud: ", +location.getLatitude()
+                                + "Longitud: " + location.getLongitude());
+
+                        Map<String, Object> latlong = new HashMap<>();
+                        latlong.put("Latitud", location.getLatitude());
+                        latlong.put("Longitud", location.getLongitude());
+                        databaseReference.child("reportes").push().setValue(latlong);
+
+                        LatLng lng = new LatLng(location.getLatitude(), location.getLongitude());
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 13.0f));
+                    }
+                });
+    }
+
 
     /**
      * Manipulates the map once available.
@@ -60,28 +134,45 @@ public class Principal extends FragmentActivity implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
+        databaseReference.child("reportes").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, location -> {
-                    // Got last known location. In some rare situations this can be null.
-                    if (location != null) {
-                        // Logic to handle location object
-                        LatLng lng = new LatLng(location.getLatitude(), location.getLongitude());
-                        mMap.addMarker(new MarkerOptions().position(lng).title("Ubicación actual :)"));
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 13.0f));
+                for (Marker marker : realTimeMarkers) {
+                    marker.remove();
+                }
 
-                    }
-                });
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    MapsPojo mp = dataSnapshot.getValue(MapsPojo.class);
+                    Double Latitud = mp.getLatitud();
+                    Double Longitud = mp.getLongitud();
+                    MarkerOptions markerOptions = new MarkerOptions();
+                    markerOptions.position(new LatLng(Latitud, Longitud));
+
+                    tmpRealtimeMarker.add(mMap.addMarker(markerOptions));
+                }
+                realTimeMarkers.clear();
+                realTimeMarkers.addAll(tmpRealtimeMarker);
+                countDownTimer();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+
+        });
 
     }
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.button_report:
+                Intent intent = new Intent(Principal.this, MenuLateral.class);
+                startActivity(intent);
+                break;
+        }
+    }
 }
+
+

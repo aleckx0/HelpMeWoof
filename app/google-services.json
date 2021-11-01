@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "196850129856",
+    "project_id": "help-me-woof-4b8a2",
+    "storage_bucket": "help-me-woof-4b8a2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:196850129856:android:5493ec5654c773d8280625",
+        "android_client_info": {
+          "package_name": "net.alecks.helpmewoof"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "196850129856-hq3ls9m4b9l30hva7vjnbkq95rb9vdmr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5rTkKSP4RFxrpkzctIQtZigpaH3yjdCg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "196850129856-hq3ls9m4b9l30hva7vjnbkq95rb9vdmr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
