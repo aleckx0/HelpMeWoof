@@ -10,109 +10,156 @@
 
 <!-- Este bloque es para la parte de clasificacion y descripcion -->
 
+    <!-- app:layout_constraintTop_toBottomOf="@+id/textView4" /> -->
+
     <TextView
-        android:id="@+id/idclasifydescrip"
+        android:id="@+id/txt_titulo1"
         android:layout_width="314dp"
         android:layout_height="35dp"
         android:fontFamily="sans-serif-black"
-        android:text="Clasificacion y Descripcion"
+        android:text="@string/txt_titulo1"
         android:textColor="@color/black"
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.075"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.025" />
 
-    <RadioButton
-        android:id="@+id/idperdido"
-        android:layout_width="94dp"
-        android:layout_height="30dp"
+    <CheckBox
+        android:id="@+id/rbtn1"
+        android:layout_width="111dp"
+        android:layout_height="48dp"
         android:fontFamily="sans-serif-condensed"
-        android:text="Perdido"
+        android:text="@string/rbtn1"
         android:textColor="@color/black"
         android:textColorHighlight="@color/black"
-        android:textSize="17sp"
+        android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.023"
+        app:layout_constraintHorizontal_bias="0.083"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.091" />
+        app:layout_constraintVertical_bias="0.102" />
 
-    <RadioButton
-        android:id="@+id/idherido"
-        android:layout_width="94dp"
-        android:layout_height="30dp"
+    <CheckBox
+        android:id="@+id/rbtn3"
+        android:layout_width="111dp"
+        android:layout_height="48dp"
         android:fontFamily="sans-serif-condensed"
-        android:text="Herido"
+        android:text="@string/rbtn3"
         android:textColor="@color/black"
         android:textColorHighlight="@color/black"
-        android:textSize="17sp"
+        android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.678"
+        app:layout_constraintHorizontal_bias="0.913"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.089" />
+        app:layout_constraintVertical_bias="0.102" />
 
-    <RadioButton
-        android:id="@+id/idcallejero"
-        android:layout_width="94dp"
-        android:layout_height="30dp"
+    <CheckBox
+        android:id="@+id/rbtn2"
+        android:layout_width="111dp"
+        android:layout_height="48dp"
         android:fontFamily="sans-serif-condensed"
-        android:text="Callejero"
+        android:text="@string/rbtn2"
         android:textColor="@color/black"
         android:textColorHighlight="@color/black"
-        android:textSize="17sp"
+        android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.337"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.09" />
+        app:layout_constraintVertical_bias="0.102" />
 
     <EditText
-        android:id="@+id/idtextdedescripcion"
+        android:id="@+id/txt_descrip"
         android:layout_width="342dp"
         android:layout_height="133dp"
         android:background="@color/white"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Describe al lomito o al michi"
+        android:hint="@string/txt_descrip"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.187" />
+        app:layout_constraintVertical_bias="0.232" />
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="274dp"
-        android:layout_height="259dp"
+        android:id="@+id/image_carga"
+        android:layout_width="259dp"
+        android:layout_height="244dp"
+        android:src="@drawable/fondogyp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.623"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
+        app:layout_constraintVertical_bias="0.658"
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        tools:srcCompat="@drawable/fondogyp" />
 
     <Button
-        android:id="@+id/idbtncargarimagen"
-        android:layout_width="176dp"
-        android:layout_height="42dp"
-        android:text="Seleccionar Imagen"
+        android:id="@+id/btn1"
+        android:layout_width="131dp"
+        android:layout_height="48dp"
         android:background="@color/purple_200"
+        android:text="@string/btn1"
+        android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.271"
+        app:layout_constraintHorizontal_bias="0.095"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.84" />
+        app:layout_constraintVertical_bias="0.873" />
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="131dp"
+        android:layout_height="48dp"
+        android:background="@color/purple_200"
+        android:text="@string/btn2"
+        android:textSize="17sp"
+        android:onClick="cargarimag"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.687"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.871" />
+
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="131dp"
+        android:layout_height="48dp"
+        android:background="@color/purple_200"
+        android:text="@string/btn3"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.095"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.973" />
+
+    <Button
+        android:id="@+id/btn4p"
+        android:layout_width="151dp"
+        android:layout_height="48dp"
+        android:background="@color/purple_200"
+        android:text="@string/btn4p"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.743"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.973" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

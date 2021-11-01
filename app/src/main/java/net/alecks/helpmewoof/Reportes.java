@@ -38,10 +38,8 @@ import java.util.Objects;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -72,11 +70,11 @@ public class Reportes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reportes);
-        imagen = (ImageView) findViewById (R.id.imageView);
+        imagen = (ImageView) findViewById (R.id.image_carga);
         crearReporte = findViewById(R.id.button);
-        abrirCámara = findViewById(R.id.button2);
-        abrirGaleria = findViewById(R.id.button3);
-        quitarImagen = findViewById(R.id.button4);
+        abrirCámara = findViewById(R.id.btn1);
+        abrirGaleria = findViewById(R.id.btn2);
+        quitarImagen = findViewById(R.id.btn3);
 
         editTextDescripción = findViewById(R.id.editTextTextMultiLine);
 
