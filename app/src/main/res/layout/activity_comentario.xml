@@ -8,7 +8,7 @@
     android:background="@drawable/fondo1">
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/btn2"
         android:layout_width="163dp"
         android:layout_height="66dp"
         android:text="Publicar"

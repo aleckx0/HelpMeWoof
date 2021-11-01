@@ -1,4 +1,14 @@
 <resources>
+    <!--<string name=""></string>-->
     <string name="app_name">Help Me Woof</string>
-    <string name="titulo">Clasificacion</string>
+    <string name="txt_titulo1">Clasificacion y Descripcion</string>
+    <string name="rbtn1">Perdido</string>
+    <string name="rbtn2">Callejero</string>
+    <string name="rbtn3">Herido</string>
+    <string name="txt_descrip">Describe al lomito o al michi</string>
+    <string name="btn1">Abrir Camara</string>
+    <string name="btn2">Abrir Galeria</string>
+    <string name="btn3">Quitar Imagen</string>
+    <string name="btn4p">Crear Reporte</string>
+
 </resources>

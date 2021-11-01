@@ -2,11 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="net.alecks.helpmewoof">
 
-    <uses-permission android:name = "android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name ="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name ="android.permission.CAMERA"/>
-    <uses-permission android:name = "android.permission.INTERNET"/>
-    <uses-feature android:name="android.hardware.camera" android:required="true"></uses-feature>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" /> <!-- Se agregan los permios para obtener la ubicacion. Se agrego el coarse_location porque se pidio por android. -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-feature android:name="android.hardware.location.gps" />
+    <!-- Con esto de abajo se agrega permisos para la galeria -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -16,24 +25,31 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HelpMeWoof">
         <activity
+            android:name=".formulariohistoria"
+            android:exported="false" />
+        <activity
             android:name=".Reportes"
             android:exported="true" />
-        <activity android:name=".formulariopublicar"
-            android:label="@string/app_name"
-            android:exported="true">
+        <activity
+            android:name=".formulariopublicar"
+            android:exported="true"
+            android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.FORMULARIOPUBLICAR"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.FORMULARIOPUBLICAR" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".comentario"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
-                <action android:name="package.OtherActivity"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="package.OtherActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="net.alecks.helpmewoof.fileprovider"
@@ -41,7 +57,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
     </application>
+
 </manifest>
