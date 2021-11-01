@@ -6,15 +6,17 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
-
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="true" /> <!-- Se agregan los permios para obtener la ubicacion. Se agrego el coarse_location porque se pidio por android. -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-feature android:name="android.hardware.location.gps" />
+    <!-- Se agregan los permios para obtener la ubicacion. Se agrego el coarse_location porque se pidio por android.-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
     <!-- Con esto de abajo se agrega permisos para la galeria -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
 
 
     <application

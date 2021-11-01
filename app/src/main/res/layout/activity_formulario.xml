@@ -22,10 +22,10 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.025" />
+        app:layout_constraintVertical_bias="0.03" />
 
     <CheckBox
         android:id="@+id/rbtn1"
@@ -77,8 +77,8 @@
 
     <EditText
         android:id="@+id/txt_descrip"
-        android:layout_width="342dp"
-        android:layout_height="133dp"
+        android:layout_width="311dp"
+        android:layout_height="73dp"
         android:background="@color/white"
         android:ems="10"
         android:gravity="start|top"
@@ -86,10 +86,9 @@
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.45"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.232" />
+        app:layout_constraintVertical_bias="0.207" />
 
     <ImageView
         android:id="@+id/image_carga"
@@ -111,12 +110,13 @@
         android:background="@color/purple_200"
         android:text="@string/btn1"
         android:textSize="17sp"
+        android:onClick="abrircam"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.095"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.873" />
+        app:layout_constraintVertical_bias="0.87" />
 
     <Button
         android:id="@+id/btn2"
@@ -160,6 +160,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.973" />
+
+    <TextView
+        android:id="@+id/txt_gps_prueba"
+        android:layout_width="306dp"
+        android:layout_height="49dp"
+        android:background="@color/white"
+        android:text="Ubicacion GPS"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.343" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
