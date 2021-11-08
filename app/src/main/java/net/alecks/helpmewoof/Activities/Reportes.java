@@ -1,6 +1,8 @@
 package net.alecks.helpmewoof.Activities;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -91,13 +93,13 @@ public class  Reportes extends AppCompatActivity {
                     for (int i = 0; i < clasificación.size(); i++){
                         switch  (i){
                             case 0:
-                                textViewClasificacion1.setText(clasificación.get(i).toString());
+                                textViewClasificacion1.setText("#"+clasificación.get(i).toString());
                             break;
                             case 1:
-                                textViewClasificacion2.setText(clasificación.get(i).toString());
+                                textViewClasificacion2.setText("#"+clasificación.get(i).toString());
                             break;
                             case 2:
-                                textViewClasificacion3.setText(clasificación.get(i).toString());
+                                textViewClasificacion3.setText("#"+clasificación.get(i).toString());
                             break;
                         }
                     }
@@ -120,7 +122,6 @@ public class  Reportes extends AppCompatActivity {
         iniciarRecyclerViewComentario();
 
 
-
         //Menotodos click lisener
         publicarComentario.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +135,9 @@ public class  Reportes extends AppCompatActivity {
                     //databaseReference.child("comentarios").push().setValue(datosComentarios);
                     databaseReference.child("Reportes").child(idReporte).child("comentarios").push().setValue(datosComentarios);
                     Toast.makeText(Reportes.this, "Comentario creado correctamente", Toast.LENGTH_SHORT).show();
+                    editTextComentario.setText("");
                     datosComentarios.clear();
+
                 }else{
                     Toast.makeText(Reportes.this, "Es necesario escribir un comentario", Toast.LENGTH_SHORT).show();
                 }
@@ -165,5 +168,26 @@ public class  Reportes extends AppCompatActivity {
             }
         });
 
+    }
+    //Método para mostrar y ocultar el menú
+    public boolean onCreateOptionsMenu (Menu menu){
+        getMenuInflater().inflate(R.menu.overflow, menu);
+        return true;
+    }
+    //Método para asignar las funciones correspondientes a las opciones
+    public boolean onOptionsItemSelected(MenuItem item){
+        int id = item.getItemId();
+        if (id == R.id.item1){
+            Toast.makeText(this, "Reporte marcado como resuelto correctamente!", Toast.LENGTH_SHORT).show();
+            //Desactivar creación de comentarios
+            editTextComentario.setEnabled(false);
+            editTextComentario.setHint("Discusión terminada");
+            //editTextComentario.setVisibility();
+            publicarComentario.setEnabled(false);
+
+        }else if (id == R.id.item2){
+            Toast.makeText(this, "Reporte eliminado", Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

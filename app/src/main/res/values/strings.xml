@@ -1,6 +1,8 @@
 <resources>
     <!--<string name=""></string>-->
     <string name="app_name">Help Me Woof</string>
+    <string name="item1">Marcar Resuelto</string>
+    <string name="item2">Eliminar Reporte</string>
     <string name="txt_titulo1">Clasificacion y Descripcion</string>
     <string name="rbtn1">Perdido</string>
     <string name="rbtn2">Callejero</string>
