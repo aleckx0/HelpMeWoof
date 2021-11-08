@@ -1,4 +1,4 @@
-package net.alecks.helpmewoof;
+package net.alecks.helpmewoof.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +28,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+
+import net.alecks.helpmewoof.R;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -45,6 +48,7 @@ public class formulariopublicar extends AppCompatActivity {
     Button abrirGaleria;
     Button quitarImagen;
     Button crearReporte;
+
     //Variables para cargar a firebase
     final int código_galería = 10;
     final int código_cámara = 20;
@@ -53,14 +57,16 @@ public class formulariopublicar extends AppCompatActivity {
     String linkImagen;
     String nombreImagenCamara;
     boolean conImagen;
-    ArrayList ubicacion = new ArrayList();
+
+    //Metodo onCreate
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_formulario);
+
         //Variables de los elementos del activity
         editTextDescripción = findViewById(R.id.txt_descrip);
-        txt_gps_prueba = (TextView)findViewById(R.id.txt_gps_prueba);
+        txt_gps_prueba = (TextView) findViewById(R.id.txt_gps_prueba);
         checkHerido = findViewById(R.id.rbtn3);
         checkSituaciónCalle = findViewById(R.id.rbtn2);
         checkPerdido = findViewById(R.id.rbtn1);
@@ -69,6 +75,7 @@ public class formulariopublicar extends AppCompatActivity {
         abrirGaleria = findViewById(R.id.btn2);
         quitarImagen = findViewById(R.id.btn3);
         crearReporte = findViewById(R.id.btn4p);
+
         //Variables para cargar a firebase
         databaseReference = FirebaseDatabase.getInstance().getReference();
         Map<String, Object> datosReportes = new HashMap<>();
@@ -81,12 +88,31 @@ public class formulariopublicar extends AppCompatActivity {
                 ActivityCompat.requestPermissions(formulariopublicar.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             }
         }
+
         //Solicita los permisos para las imagenes
         if (ContextCompat.checkSelfPermission(formulariopublicar.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(formulariopublicar.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(formulariopublicar.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA}, 1000);
         }
-        // Generamos la ubicación
-        ubicación();
+
+        //Se muestra y se guarda la ubicación
+        Map<String, Object> coordenadas = new HashMap<>();
+        LocationManager locationManager = (LocationManager) formulariopublicar.this.getSystemService(Context.LOCATION_SERVICE);
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+                txt_gps_prueba.setText(""+location.getLatitude()+" "+location.getLongitude());
+                Double latitud = location.getLatitude();
+                Double longitud = location.getLongitude();
+                coordenadas.put("Latitud",latitud);
+                coordenadas.put("Longitud",longitud);
+            }
+            public void onStatusChanged(String provider, int status, Bundle extras) {}
+            public void onProviderEnabled(String provider) {}
+            public void onProviderDisabled(String provider) {}
+        };
+        //int permissionCheck = ContextCompat.checkSelfPermission(formulariopublicar.this, Manifest.permission.ACCESS_FINE_LOCATION);
+        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
+
+        //Metodos Click Listetener
         abrirCámara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,13 +136,16 @@ public class formulariopublicar extends AppCompatActivity {
         crearReporte.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Se comprueba que la descripción y la clasificación no esten vacias
                 boolean editTextVacio = editTextDescripción.getText().toString().equals("");
                 if  (!editTextVacio) {
                     if (checkHerido.isChecked() || checkSituaciónCalle.isChecked() || checkPerdido.isChecked()){
                         //Se asigna el estado del reporte a Activo
                         String estado = "Activo";
+
                         //Obtenemos la información de descripción
                         String descripción =  editTextDescripción.getText().toString();
+
                         //Creamos un arraylist y guardamos las clasificaciónes seleccionadas
                         ArrayList clasificación = new ArrayList();
                         if  (checkHerido.isChecked()){
@@ -132,11 +161,13 @@ public class formulariopublicar extends AppCompatActivity {
                         datosReportes.put("clasificación",clasificación);
                         datosReportes.put("descripción",descripción);
                         datosReportes.put("estado",estado);
-                        datosReportes.put("ubicación",ubicacion);
+                        datosReportes.put("ubicación",coordenadas);
                         //Comprobamos si hay imagen para agregarla al Hashmap
                         if (conImagen) {
                             datosReportes.put("imagen", linkImagen);
                         }
+
+                        //Se envian los datos a firebase
                         databaseReference.child("Reportes").push().setValue(datosReportes);
                         Toast.makeText(formulariopublicar.this, "Reporte creado correctamente", Toast.LENGTH_SHORT).show();
                         datosReportes.clear();
@@ -146,8 +177,8 @@ public class formulariopublicar extends AppCompatActivity {
                 }else{
                     Toast.makeText(formulariopublicar.this, "Es necesario agregar una descripción", Toast.LENGTH_SHORT).show();
                 }
-                //Aqui termina el proceso, debe regresar a pantalla principal y limpiar el formulario
 
+                //Aqui termina el proceso, debe regresar a pantalla principal y limpiar el formulario
                 editTextDescripción.setText("");
                 if(checkHerido.isChecked()){
                     checkHerido.toggle();
@@ -161,37 +192,11 @@ public class formulariopublicar extends AppCompatActivity {
                 imagen.setImageResource(R.drawable.fondogyp);
                 txt_gps_prueba.setText("");
                 conImagen = false;
-
             }
         });
     }
-    private void ubicación (){
-        //Codigo de GPS
-        //ArrayList ubicacion = new ArrayList();
-        //se obtienen las referencias del sistema de localizacion manager
-        LocationManager locationManager = (LocationManager) formulariopublicar.this.getSystemService(Context.LOCATION_SERVICE);
-        //Define a listener that responds to location updates
-        LocationListener locationListener = new LocationListener() {
-            public void onLocationChanged(Location location) {
-                //crea un objeto locationmanager con un locationlistener que cuando cambie la ubicacion, estatus y cuando el provedor
-                //este habilidato o desabilitado el provedor de ubicacion
-                txt_gps_prueba.setText(""+location.getLatitude()+" "+location.getLongitude());
-                Double latitud = 0.0;
-                Double longitud = 0.0;
-                latitud = location.getLatitude();
-                longitud = location.getLongitude();
-                ubicacion.add(latitud);
-                ubicacion.add(longitud);
-            }
-            public void onStatusChanged(String provider, int status, Bundle extras) {}
 
-            public void onProviderEnabled(String provider) {}
-
-            public void onProviderDisabled(String provider) {}
-        };
-        int permissionCheck = ContextCompat.checkSelfPermission(formulariopublicar.this, Manifest.permission.ACCESS_FINE_LOCATION);
-        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-    }
+    //Metodos void
     private void camara(){
         //Abre la camara
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -228,7 +233,7 @@ public class formulariopublicar extends AppCompatActivity {
                     }));
                     //Se muestra la imagen en el imageview
                     imagen.setImageURI(imgUri);
-                    break;
+                break;
                 case código_cámara:
                     conImagen = true;
                     Bitmap imgBitmap = BitmapFactory.decodeFile(getExternalFilesDir(null) + "/imagen_"+nombreImagenCamara);
@@ -238,7 +243,7 @@ public class formulariopublicar extends AppCompatActivity {
                         linkImagen = String.valueOf(imgUri);
                     }));
                     imagen.setImageBitmap(imgBitmap);
-                    break;
+                break;
             }
         }
     }

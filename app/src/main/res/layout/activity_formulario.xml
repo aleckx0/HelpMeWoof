@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".formulariopublicar"
+    tools:context=".Activities.formulariopublicar"
     android:orientation="horizontal"
     android:background="@drawable/fondo0">
 
@@ -110,7 +110,6 @@
         android:background="@color/purple_200"
         android:text="@string/btn1"
         android:textSize="17sp"
-        android:onClick="abrircam"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.095"
@@ -125,7 +124,6 @@
         android:background="@color/purple_200"
         android:text="@string/btn2"
         android:textSize="17sp"
-        android:onClick="cargarimag"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.687"
