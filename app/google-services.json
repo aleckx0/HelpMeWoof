@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "214393097803",
+    "project_id": "helpmywoof",
+    "storage_bucket": "helpmywoof.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214393097803:android:d1489478169e56cfacc7ce",
+        "android_client_info": {
+          "package_name": "com.ruddymiranda.helpmywoof"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214393097803-n2tk89t9a0poeprhut3bqb4u65f7ngd1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVWH9201uj8gaTTr0U7ngE3k4WGsMSnDs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214393097803-n2tk89t9a0poeprhut3bqb4u65f7ngd1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214393097803:android:89106cf475f76a64acc7ce",
+        "android_client_info": {
+          "package_name": "net.alecks.helpmewoof"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214393097803-n2tk89t9a0poeprhut3bqb4u65f7ngd1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVWH9201uj8gaTTr0U7ngE3k4WGsMSnDs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214393097803-n2tk89t9a0poeprhut3bqb4u65f7ngd1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
