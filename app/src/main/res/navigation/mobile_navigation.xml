@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="net.alecks.helpmewoof.ui.maps.MapsFragment"
+        android:label="@string/mapa"
+        tools:layout="@layout/fragment_maps" />
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="net.alecks.helpmewoof.ui.registrarse.RegistrarseFragment"
+        android:label="registrarse"
+        tools:layout="@layout/fragment_registrarse" />
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="net.alecks.helpmewoof.ui.ayuda.AyudaFragment"
+        android:label="@string/menu_ayuda"
+        tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nuevo_reporte"
+        android:name="net.alecks.helpmewoof.ui.NuevoReporte.NuevoReporteFragment"
+        android:label="@string/nuevo_reporte"
+        tools:layout="@layout/fragment_nuevo_reporte" />
+</navigation>

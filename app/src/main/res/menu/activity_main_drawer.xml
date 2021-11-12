@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/registropantalla"
-            android:icon="@drawable/sign_up"
-            android:onClick="registrar"
-            android:title="@string/registropantalla"
-            tools:ignore="SpeakableTextPresentCheck" />
-
+            android:id="@+id/nav_home"
+            android:icon="@drawable/mapa_ic"
+            android:title="@string/mapa" />
         <item
-            android:id="@+id/iniciarsesionpantalla"
-            android:icon="@drawable/sign_in"
-            android:onClick="iriniciar"
-            android:title="@string/iniciarsesionpantalla"
-            tools:text="@string/iniciarsesionpantalla" />
-
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/persona_ic"
+            android:title="@string/iniciar_sesi_n_registrarse" />
+        <item
+            android:id="@+id/nuevo_reporte"
+            android:icon="@drawable/nuevo_ic"
+            android:title="@string/nuevo_reporte" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ayuda_ic"
+            android:title="@string/menu_ayuda" />
 
     </group>
+    <item
+        android:id="@+id/switch_theme"
+        android:title="@string/modo_oscuro"
+        android:icon="@drawable/oscuro_ic"
+        app:actionLayout="@layout/switch_item" />
 </menu>
