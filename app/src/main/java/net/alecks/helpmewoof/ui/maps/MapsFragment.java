@@ -86,7 +86,8 @@ public class MapsFragment extends Fragment {
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
 
-                databaseReference.child("test").addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseReference.child("test")
+                        .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
