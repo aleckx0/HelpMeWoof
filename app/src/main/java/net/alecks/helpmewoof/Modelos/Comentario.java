@@ -5,26 +5,22 @@ import com.google.firebase.database.ServerValue;
 public class Comentario {
 
     private String comentario;
-    private String idUsuario;
-    private String nombreUsuario;
+    private String nivelU;
     private Object timestamp;
-
 
     public Comentario() {
     }
 
-    public Comentario(String comentario, String idUsuario, String nombreUsuario) {
+    public Comentario(String comentario, String nivelU) {
         this.comentario = comentario;
-        this.idUsuario = idUsuario;
-        this.nombreUsuario = nombreUsuario;
+        this.nivelU = nivelU;
         this.timestamp = ServerValue.TIMESTAMP;
 
     }
 
-    public Comentario(String comentario, String idUsuario, String nombreUsuario, Object timestamp) {
+    public Comentario(String comentario, String nivelU, Object timestamp) {
         this.comentario = comentario;
-        this.idUsuario = idUsuario;
-        this.nombreUsuario = nombreUsuario;
+        this.nivelU = nivelU;
         this.timestamp = timestamp;
     }
 
@@ -36,20 +32,12 @@ public class Comentario {
         this.comentario = comentario;
     }
 
-    public String getIdUsuario() {
-        return idUsuario;
+    public String getNivelU() {
+        return nivelU;
     }
 
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
-    }
-
-    public String getNombreUsuario() {
-        return nombreUsuario;
-    }
-
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setNivelU(String nivelU) {
+        this.nivelU = nivelU;
     }
 
     public Object getTimestamp() {

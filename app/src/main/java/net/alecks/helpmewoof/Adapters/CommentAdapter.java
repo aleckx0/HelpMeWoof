@@ -33,7 +33,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     @Override
     public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
-        holder.tv_user.setText(mData.get(position).getNombreUsuario());
+        holder.tv_nivelu.setText(mData.get(position).getNivelU());
         holder.tv_content.setText(mData.get(position).getComentario());
         //holder.tv_date.setText(timestampToString((Long)mData.get(position).getTimestamp()));
     }
@@ -45,19 +45,17 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
 
     public class CommentViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_user, tv_content, tv_date;
+        TextView tv_nivelu, tv_content, tv_date;
 
         public CommentViewHolder(View itemView){
             super (itemView);
-            tv_user = itemView.findViewById(R.id.textView6);
+            tv_nivelu = itemView.findViewById(R.id.textView6);
             tv_content = itemView.findViewById(R.id.textView);
             tv_date = itemView.findViewById(R.id.comment_date);
-
         }
     }
 
     private String timestampToString (long time){
-
         Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
         calendar.setTimeInMillis(time);
         String date = DateFormat.format("hh:mm",calendar).toString();

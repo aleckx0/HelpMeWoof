@@ -6,11 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Activities.formulariopublicar"
     android:orientation="horizontal"
-    android:background="@drawable/fondo0">
-
-<!-- Este bloque es para la parte de clasificacion y descripcion -->
-
-    <!-- app:layout_constraintTop_toBottomOf="@+id/textView4" /> -->
+    android:background="@drawable/fondo2">
 
     <TextView
         android:id="@+id/txt_titulo1"
@@ -22,10 +18,10 @@
         android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintHorizontal_bias="0.103"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.03" />
+        app:layout_constraintVertical_bias="0.008" />
 
     <CheckBox
         android:id="@+id/rbtn1"
@@ -38,10 +34,10 @@
         android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.083"
+        app:layout_constraintHorizontal_bias="0.033"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.102" />
+        app:layout_constraintVertical_bias="0.101" />
 
     <CheckBox
         android:id="@+id/rbtn3"

@@ -72,7 +72,7 @@ public class MapsFragment extends Fragment {
                         Map<String, Object> latlong = new HashMap<>();
                         latlong.put("Latitud", location.getLatitude());
                         latlong.put("Longitud", location.getLongitude());
-                        databaseReference.child("test").push().setValue(latlong);
+                        databaseReference.child("reportes").push().setValue(latlong);
                         Log.e("Después", "Se ecuentra después");
                         LatLng lng = new LatLng(location.getLatitude(), location.getLongitude());
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 17.0f));
@@ -86,8 +86,7 @@ public class MapsFragment extends Fragment {
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
 
-                databaseReference.child("test")
-                        .addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseReference.child("reportes").addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 

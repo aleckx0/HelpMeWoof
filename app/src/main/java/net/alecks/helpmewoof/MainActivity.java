@@ -15,6 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
+import net.alecks.helpmewoof.R;
 import net.alecks.helpmewoof.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
