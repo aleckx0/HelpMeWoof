@@ -1,5 +1,7 @@
 package net.alecks.helpmewoof.Activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -211,7 +213,8 @@ public class  Reportes extends AppCompatActivity {
                     Comentario comentario = snap.getValue(Comentario.class);
                     listaComentario.add(comentario);
                 }
-                commentAdapter = new CommentAdapter(getApplicationContext(),listaComentario);
+                //commentAdapter = new CommentAdapter(getApplicationContext(),listaComentario);
+                commentAdapter = new CommentAdapter(Reportes.this,listaComentario);
                 recyclerViewComentario.setAdapter(commentAdapter);
             }
             @Override

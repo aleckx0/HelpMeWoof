@@ -169,6 +169,11 @@ public class formulariopublicar extends AppCompatActivity {
 
                         //Se envian los datos a firebase
                         databaseReference.child("Reportes").push().setValue(datosReportes);
+                        /*
+                        String key = databaseReference.push().getKey();
+                        Ccontacto c = new Ccontacto(idcontacto, nombre, alias);
+                        databaseReference.child(key).setValue(c);
+                         */
                         Toast.makeText(formulariopublicar.this, "Reporte creado correctamente", Toast.LENGTH_SHORT).show();
                         datosReportes.clear();
                     }else{

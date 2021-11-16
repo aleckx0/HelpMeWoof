@@ -1,23 +1,33 @@
 package net.alecks.helpmewoof.Adapters;
 
+import android.app.AlertDialog;
+import android.content.ClipData;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatCallback;
 import androidx.recyclerview.widget.RecyclerView;
+
+import net.alecks.helpmewoof.Activities.Reportes;
 import net.alecks.helpmewoof.Modelos.Comentario;
 import net.alecks.helpmewoof.R;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder>  {
 
     private Context mContext;
     private List<Comentario> mData;
+    int selected_position = 0;
 
     public CommentAdapter(Context mContext, List<Comentario> mdata) {
         this.mContext = mContext;
@@ -43,15 +53,35 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
         return mData.size();
     }
 
+
     public class CommentViewHolder extends RecyclerView.ViewHolder {
-
         TextView tv_nivelu, tv_content, tv_date;
-
         public CommentViewHolder(View itemView){
             super (itemView);
             tv_nivelu = itemView.findViewById(R.id.textView6);
             tv_content = itemView.findViewById(R.id.textView);
             tv_date = itemView.findViewById(R.id.comment_date);
+            //Muestra menu alert dialog para eliminar el comentario
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    final CharSequence [] opciones = {"Eliminar comentario"};
+                    final AlertDialog.Builder alertOpciones = new AlertDialog.Builder(mContext);
+                    alertOpciones.setTitle("Seleccione una opción");
+                    alertOpciones.setItems(opciones, new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (opciones[which].equals("Eliminar comentario")){
+                                Toast.makeText(mContext, "Comentario eliminado correctamente", Toast.LENGTH_SHORT).show();
+                            }else{
+                                dialog.dismiss();
+                            }
+                        }
+                    });
+                    alertOpciones.show();
+                    return false;
+                }
+            });
         }
     }
 
