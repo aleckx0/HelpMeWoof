@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.formulariopublicar"
+    android:orientation="horizontal"
+    android:background="@drawable/fondo2">
+
+    <TextView
+        android:id="@+id/txt_titulo1"
+        android:layout_width="314dp"
+        android:layout_height="35dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/txt_titulo1"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.103"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.008" />
+
+    <CheckBox
+        android:id="@+id/rbtn1"
+        android:layout_width="111dp"
+        android:layout_height="48dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/rbtn1"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/black"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.033"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.101" />
+
+    <CheckBox
+        android:id="@+id/rbtn3"
+        android:layout_width="111dp"
+        android:layout_height="48dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/rbtn3"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/black"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.913"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.102" />
+
+    <CheckBox
+        android:id="@+id/rbtn2"
+        android:layout_width="111dp"
+        android:layout_height="48dp"
+        android:fontFamily="sans-serif-condensed"
+        android:text="@string/rbtn2"
+        android:textColor="@color/black"
+        android:textColorHighlight="@color/black"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.102" />
+
+    <EditText
+        android:id="@+id/txt_descrip"
+        android:layout_width="311dp"
+        android:layout_height="73dp"
+        android:background="@color/white"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="@string/txt_descrip"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.207" />
+
+    <ImageView
+        android:id="@+id/image_carga"
+        android:layout_width="259dp"
+        android:layout_height="244dp"
+        android:src="@drawable/fondogyp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.658"
+        app:srcCompat="@drawable/ic_launcher_foreground"
+        tools:srcCompat="@drawable/fondogyp" />
+
+    <Button
+        android:id="@+id/btn1"
+        android:layout_width="131dp"
+        android:layout_height="48dp"
+        android:background="@color/purple_200"
+        android:text="@string/btn1"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.095"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.87" />
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="131dp"
+        android:layout_height="48dp"
+        android:background="@color/purple_200"
+        android:text="@string/btn2"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.687"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.871" />
+
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="131dp"
+        android:layout_height="48dp"
+        android:background="@color/purple_200"
+        android:text="@string/btn3"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.095"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.973" />
+
+    <Button
+        android:id="@+id/btn4p"
+        android:layout_width="151dp"
+        android:layout_height="48dp"
+        android:background="@color/purple_200"
+        android:text="@string/btn4p"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.743"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.973" />
+
+    <TextView
+        android:id="@+id/txt_gps_prueba"
+        android:layout_width="306dp"
+        android:layout_height="49dp"
+        android:background="@color/white"
+        android:text="Ubicacion GPS"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.343" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+<!-- NOTAS:
+android:Layoutgravity="center" coloca el cuadro del layour centrado
+android:gravity="center" coloca el texto dentro del cuadro del layout centrado
+wrap_content delimita el texto dentro de un cuadro de layout se puede hacer grande o pequeno
+match_parent toma margenes grandes dejando espacio de sobra en el componente
+android:layout_marginbottom="30dp" deja un margen de espacio abajo para un boton o lo que haya
+<!- android:textColor="@color/black" cambiar color de texto
+
+-->
