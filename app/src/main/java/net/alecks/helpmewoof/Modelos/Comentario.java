@@ -15,7 +15,6 @@ public class Comentario {
         this.comentario = comentario;
         this.nivelU = nivelU;
         this.timestamp = ServerValue.TIMESTAMP;
-
     }
 
     public Comentario(String comentario, String nivelU, Object timestamp) {
