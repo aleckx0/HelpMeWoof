@@ -1,6 +1,7 @@
 package net.alecks.helpmewoof.ui.maps;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,7 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -32,16 +32,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import net.alecks.helpmewoof.MapsPojo;
+import net.alecks.helpmewoof.Activities.Reportes;
 import net.alecks.helpmewoof.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapsFragment extends Fragment {
+public class MapsFragment extends Fragment{
     private GoogleMap mMap;
-    //private ActivityPrincipalBinding binding;
     private FusedLocationProviderClient fusedLocationClient;
     DatabaseReference databaseReference;
     private int MY_PERMISSIONS_REQUEST_READ_CONTACTS;
@@ -49,6 +48,7 @@ public class MapsFragment extends Fragment {
     private ArrayList<Marker> realTimeMarkers = new ArrayList<>();
 
     private void UploadData() {
+
         if (ActivityCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
@@ -80,53 +80,52 @@ public class MapsFragment extends Fragment {
                 });
     }
 
+
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
-
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                mMap = googleMap;
-
-                databaseReference.child("reportes").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-
+        @Override
+        public void onMapReady(GoogleMap googleMap) {
+            mMap = googleMap;
+            databaseReference.child("Reportes").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         for (Marker marker : realTimeMarkers) {
                             marker.remove();
                         }
+                        String latitud = snapshot.child(dataSnapshot.getKey()).child("coordenadas").child("Latitud").getValue().toString();
+                        Double Latitud = Double.valueOf(latitud).doubleValue();
+                        String longitud = snapshot.child(dataSnapshot.getKey()).child("coordenadas").child("Longitud").getValue().toString();
+                        Double Longitud = Double.valueOf(longitud).doubleValue();
 
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            MapsPojo mp = dataSnapshot.getValue(MapsPojo.class);
-                            Double Latitud = mp.getLatitud();
-                            Double Longitud = mp.getLongitud();
-                            MarkerOptions markerOptions = new MarkerOptions();
+                        MarkerOptions markerOptions = new MarkerOptions();
+                        Bitmap img = BitmapFactory.decodeResource(getResources(), R.drawable.location);
+                        Bitmap smallimg = Bitmap.createScaledBitmap(img, 150, 150, false);
+                        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(smallimg);
 
-                            Bitmap img = BitmapFactory.decodeResource(getResources(), R.drawable.location);
-                            Bitmap smallimg = Bitmap.createScaledBitmap(img, 150, 150, false);
-                            BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(smallimg);
-
-                            markerOptions.position(new LatLng(Latitud, Longitud)).icon(bitmapDescriptor);
-
-                            tmpRealtimeMarker.add(mMap.addMarker(markerOptions));
-                        }
-                        realTimeMarkers.clear();
-                        realTimeMarkers.addAll(tmpRealtimeMarker);
-                        //CountDownTimer();
-
-
+                        markerOptions.position(new LatLng(Latitud, Longitud)).icon(bitmapDescriptor).title(dataSnapshot.getKey());
+                        tmpRealtimeMarker.add(mMap.addMarker(markerOptions));
                     }
+                    realTimeMarkers.clear();
+                    realTimeMarkers.addAll(tmpRealtimeMarker);
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-
-
-                });
-
-            }
+                }
+            });
+            //Al dar click al marcador de la ubicacion se abre la activity reportes y envia junto con el idReporte
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(@NonNull Marker marker) {
+                    String idReporte = marker.getTitle();
+                    Intent i = new Intent (getActivity(),Reportes.class);
+                    i.putExtra("idReporte",idReporte);
+                    startActivity(i);
+                    return false;
+                }
+            });
+        }
     };
-
-
 
     @Nullable
     @Override
@@ -145,8 +144,7 @@ public class MapsFragment extends Fragment {
             mapFragment.getMapAsync(callback);
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
             databaseReference = FirebaseDatabase.getInstance().getReference();
-            UploadData();
+            UploadData();//
         }
-
     }
 }

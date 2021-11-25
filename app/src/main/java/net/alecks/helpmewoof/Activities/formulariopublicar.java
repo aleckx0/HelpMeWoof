@@ -24,11 +24,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import net.alecks.helpmewoof.MainActivity;
+import net.alecks.helpmewoof.Modelos.Reporte;
 import net.alecks.helpmewoof.R;
 
 import java.io.File;
@@ -58,6 +61,7 @@ public class formulariopublicar extends AppCompatActivity {
     String nombreImagenCamara;
     boolean conImagen;
 
+
     //Metodo onCreate
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,7 @@ public class formulariopublicar extends AppCompatActivity {
         //Variables para cargar a firebase
         databaseReference = FirebaseDatabase.getInstance().getReference();
         Map<String, Object> datosReportes = new HashMap<>();
+
         //Solicita permisos para el gps
         int permissionCheck = ContextCompat.checkSelfPermission(formulariopublicar.this, Manifest.permission.ACCESS_FINE_LOCATION);
         if (permissionCheck == PackageManager.PERMISSION_DENIED) {
@@ -109,7 +114,6 @@ public class formulariopublicar extends AppCompatActivity {
             public void onProviderEnabled(String provider) {}
             public void onProviderDisabled(String provider) {}
         };
-        //int permissionCheck = ContextCompat.checkSelfPermission(formulariopublicar.this, Manifest.permission.ACCESS_FINE_LOCATION);
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
         //Metodos Click Listetener
@@ -117,7 +121,6 @@ public class formulariopublicar extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 camara();
-
             }
         });
         abrirGaleria.setOnClickListener(new View.OnClickListener() {
@@ -157,23 +160,29 @@ public class formulariopublicar extends AppCompatActivity {
                         if  (checkPerdido.isChecked()){
                             clasificación.add(checkPerdido.getText().toString());
                         }
-                        //Enviar datos de un Hashmap a firebase
-                        datosReportes.put("clasificación",clasificación);
-                        datosReportes.put("descripción",descripción);
-                        datosReportes.put("estado",estado);
-                        datosReportes.put("ubicación",coordenadas);
-                        //Comprobamos si hay imagen para agregarla al Hashmap
-                        if (conImagen) {
-                            datosReportes.put("imagen", linkImagen);
-                        }
 
-                        //Se envian los datos a firebase
-                        databaseReference.child("Reportes").push().setValue(datosReportes);
-                        /*
-                        String key = databaseReference.push().getKey();
-                        Ccontacto c = new Ccontacto(idcontacto, nombre, alias);
-                        databaseReference.child(key).setValue(c);
-                         */
+                        //Se guarda el key del reporte
+                        String idReporte = databaseReference.child("Reportes").push().getKey();
+
+                        //Obtenemos el nivel del usuario
+                        Reportes reportes = new Reportes();
+                        String nivelUsuario = reportes.nivelUsuario();
+
+                        //Obtenemos el id del usuario
+                        MainActivity main = new MainActivity();
+                        main.mCurrentUser.getUid();
+                        String idUsuario = main.mCurrentUser.getUid();
+
+                        //Comprobamos si hay imagen
+                        if (conImagen){
+                            //Enviar datos de un objeto Reportes a firebase con imagen
+                            Reporte reporte = new Reporte(idReporte, idUsuario, nivelUsuario, estado, clasificación, descripción, linkImagen, coordenadas);
+                            databaseReference.child("Reportes").child(idReporte).setValue(reporte);
+                        }else{
+                            //Enviar datos de un objeto Reportes a firebase sin imagen
+                            Reporte reporte = new Reporte(idReporte, idUsuario, nivelUsuario, estado, clasificación, descripción, coordenadas);
+                            databaseReference.child(idReporte).setValue(reporte);
+                        }
                         Toast.makeText(formulariopublicar.this, "Reporte creado correctamente", Toast.LENGTH_SHORT).show();
                         datosReportes.clear();
                     }else{

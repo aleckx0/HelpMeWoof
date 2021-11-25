@@ -52,8 +52,6 @@ public class RegistrarseActivity extends AppCompatActivity {
                                 FirebaseUser user1 = FirebaseAuth.getInstance().getCurrentUser();
                                 user1.sendEmailVerification();
 
-
-
                                 Toast.makeText(getApplicationContext(), "Usuario creado.",
                                         Toast.LENGTH_SHORT).show();
                                 // Sign in success, update UI with the signed-in user's information
@@ -62,7 +60,6 @@ public class RegistrarseActivity extends AppCompatActivity {
 
                                 Intent i = new Intent(getApplicationContext(),AuthActivity.class);
                                 startActivity(i);
-
 
                                 //updateUI(user);
                             } else {

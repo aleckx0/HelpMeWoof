@@ -2,34 +2,52 @@ package net.alecks.helpmewoof.Modelos;
 
 import com.google.firebase.database.ServerValue;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Reporte {
     private String idReporte;
     private String idUsuario;
     private String nivelUsuario;
-    private Object timestamp;
     private String estado;
     private ArrayList clasificación;
     private String descripción;
     private String imagen;
+    private Map coordenadas;
+    private Object timestamp;
 
     public Reporte (){
 
     }
-
-    public Reporte (String idReporte, String idUser, String nivelUsuario, String estado, ArrayList clasificación, String descripción, String imagen){
+    //Con imagen
+    public Reporte (String idReporte, String idUsuario, String nivelUsuario, String estado, ArrayList clasificación, String descripción, String imagen, Map coordenadas){
         this.idReporte = idReporte;
-        this.idUsuario = idUser;
+        this.idUsuario = idUsuario;
         this.nivelUsuario = nivelUsuario;
         this.estado = estado;
         this.clasificación = clasificación;
         this.descripción = descripción;
         this.imagen = imagen;
+        this.coordenadas = coordenadas;
+        this.timestamp = ServerValue.TIMESTAMP;
+    }
+    //Sin imagen
+    public Reporte (String idReporte, String idUsuario, String nivelUsuario, String estado, ArrayList clasificación, String descripción, Map coordenadas){
+        this.idReporte = idReporte;
+        this.idUsuario = idUsuario;
+        this.nivelUsuario = nivelUsuario;
+        this.estado = estado;
+        this.clasificación = clasificación;
+        this.descripción = descripción;
+        this.coordenadas = coordenadas;
         this.timestamp = ServerValue.TIMESTAMP;
     }
 
     public String getIdReporte() {
         return idReporte;
+    }
+
+    public void setIdReporte(String idReporte) {
+        this.idReporte = idReporte;
     }
 
     public String getIdUsuario() {
@@ -46,18 +64,6 @@ public class Reporte {
 
     public void setNivelUsuario(String nivelUsuario) {
         this.nivelUsuario = nivelUsuario;
-    }
-
-    public Object getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Object timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public void setIdReporte(String idReporte) {
-        this.idReporte = idReporte;
     }
 
     public String getEstado() {
@@ -92,4 +98,19 @@ public class Reporte {
         this.imagen = imagen;
     }
 
+    public Map getCoordenadas() {
+        return coordenadas;
+    }
+
+    public void setCoordenadas(Map coordenadas) {
+        this.coordenadas = coordenadas;
+    }
+
+    public Object getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Object timestamp) {
+        this.timestamp = timestamp;
+    }
 }
