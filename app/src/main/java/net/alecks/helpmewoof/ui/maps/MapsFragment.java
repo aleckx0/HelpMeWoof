@@ -48,7 +48,7 @@ public class MapsFragment extends Fragment{
     private ArrayList<Marker> realTimeMarkers = new ArrayList<>();
 
     private void UploadData() {
-
+/*
         if (ActivityCompat.checkSelfPermission(getActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
@@ -63,27 +63,41 @@ public class MapsFragment extends Fragment{
         fusedLocationClient.getLastLocation()
                 .addOnSuccessListener(getActivity(), location -> {
                     // Got last known location. In some rare situations this can be null.
-                    Log.e("Antes", "Se ecuentra antes");
+                    //Log.e("Antes", "Se ecuentra antes");
                     if (location != null) {
                         // Logic to handle location object
-                        Log.e("Latitud: ", +location.getLatitude()
-                                + "Longitud: " + location.getLongitude());
+                        //Log.e("Latitud: ", +location.getLatitude() + "Longitud: " + location.getLongitude());
 
-                        Map<String, Object> latlong = new HashMap<>();
-                        latlong.put("Latitud", location.getLatitude());
-                        latlong.put("Longitud", location.getLongitude());
-                        databaseReference.child("reportes").push().setValue(latlong);
-                        Log.e("Después", "Se ecuentra después");
+                        //Map<String, Object> latlong = new HashMap<>();
+                        //latlong.put("Latitud", location.getLatitude());
+                        //latlong.put("Longitud", location.getLongitude());
+                        //databaseReference.child("reportes").push().setValue(latlong);
+                        //Log.e("Después", "Se ecuentra después");
                         LatLng lng = new LatLng(location.getLatitude(), location.getLongitude());
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 17.0f));
                     }
                 });
+
+ */
     }
 
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         @Override
         public void onMapReady(GoogleMap googleMap) {
+            //Pide permisos de ubicación
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION},MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+                return;
+            }
+            //Enfoca el mapa en la ubicación actual
+            fusedLocationClient.getLastLocation().addOnSuccessListener(getActivity(), location -> {
+                if (location != null) {
+                    LatLng lng = new LatLng(location.getLatitude(), location.getLongitude());
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 17.0f));
+                }
+            });
+            //Carga los marcadores
             mMap = googleMap;
             databaseReference.child("Reportes").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -144,7 +158,7 @@ public class MapsFragment extends Fragment{
             mapFragment.getMapAsync(callback);
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
             databaseReference = FirebaseDatabase.getInstance().getReference();
-            UploadData();//
+            UploadData();
         }
     }
 }

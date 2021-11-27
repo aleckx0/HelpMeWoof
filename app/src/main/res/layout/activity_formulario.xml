@@ -178,7 +178,6 @@
                 android:paddingLeft="5dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:text="Ubicacion GPS"
                 android:fontFamily="sans-serif-medium"
                 android:textColor="@color/black"
                 android:textSize="16sp"/>

@@ -72,6 +72,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 if (opciones[which].equals("Eliminar comentario")){
+
                                     Toast.makeText(mContext, "Comentario eliminado correctamente", Toast.LENGTH_SHORT).show();
                                 }else{
                                     dialog.dismiss();

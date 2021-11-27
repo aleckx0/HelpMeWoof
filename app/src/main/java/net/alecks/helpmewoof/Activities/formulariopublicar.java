@@ -19,12 +19,18 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -56,6 +62,10 @@ public class formulariopublicar extends AppCompatActivity {
     final int código_galería = 10;
     final int código_cámara = 20;
     DatabaseReference databaseReference;
+
+    StorageReference nombreFolder;
+    StorageReference nombreImagen;
+
     Uri imgUri;
     String linkImagen;
     String nombreImagenCamara;
@@ -104,7 +114,7 @@ public class formulariopublicar extends AppCompatActivity {
         LocationManager locationManager = (LocationManager) formulariopublicar.this.getSystemService(Context.LOCATION_SERVICE);
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
-                txt_gps_prueba.setText(""+location.getLatitude()+" "+location.getLongitude());
+                //txt_gps_prueba.setText(""+location.getLatitude()+" "+location.getLongitude());
                 Double latitud = location.getLatitude();
                 Double longitud = location.getLongitude();
                 coordenadas.put("Latitud",latitud);
@@ -132,8 +142,17 @@ public class formulariopublicar extends AppCompatActivity {
         quitarImagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                conImagen = false;
-                imagen.setImageResource(R.drawable.fondogyp);
+                nombreImagen.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        conImagen = false;
+                        imagen.setImageResource(R.drawable.fondogyp);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                    }
+                });
             }
         });
         crearReporte.setOnClickListener(new View.OnClickListener() {
@@ -169,22 +188,28 @@ public class formulariopublicar extends AppCompatActivity {
                         String nivelUsuario = reportes.nivelUsuario();
 
                         //Obtenemos el id del usuario
-                        MainActivity main = new MainActivity();
-                        main.mCurrentUser.getUid();
-                        String idUsuario = main.mCurrentUser.getUid();
+                        FirebaseAuth mAuth;
+                        mAuth = FirebaseAuth.getInstance();
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        String idUsuario = user.getUid();
 
-                        //Comprobamos si hay imagen
-                        if (conImagen){
-                            //Enviar datos de un objeto Reportes a firebase con imagen
-                            Reporte reporte = new Reporte(idReporte, idUsuario, nivelUsuario, estado, clasificación, descripción, linkImagen, coordenadas);
-                            databaseReference.child("Reportes").child(idReporte).setValue(reporte);
+                        //Comprobamos que se tenga la ubicación
+                        if (!coordenadas.isEmpty()){
+                            //Comprobamos si hay imagen
+                            if (conImagen){
+                                //Enviar datos de un objeto Reportes a firebase con imagen
+                                Reporte reporte = new Reporte(idReporte, idUsuario, nivelUsuario, estado, clasificación, descripción, linkImagen, coordenadas);
+                                databaseReference.child("Reportes").child(idReporte).setValue(reporte);
+                            }else{
+                                //Enviar datos de un objeto Reportes a firebase sin imagen
+                                Reporte reporte = new Reporte(idReporte, idUsuario, nivelUsuario, estado, clasificación, descripción, coordenadas);
+                                databaseReference.child("Reportes").child(idReporte).setValue(reporte);
+                            }
+                            Toast.makeText(formulariopublicar.this, "Reporte creado correctamente", Toast.LENGTH_SHORT).show();
+                            datosReportes.clear();
                         }else{
-                            //Enviar datos de un objeto Reportes a firebase sin imagen
-                            Reporte reporte = new Reporte(idReporte, idUsuario, nivelUsuario, estado, clasificación, descripción, coordenadas);
-                            databaseReference.child(idReporte).setValue(reporte);
+                            Toast.makeText(formulariopublicar.this, "Se necesita acceso a la ubicación", Toast.LENGTH_SHORT).show();
                         }
-                        Toast.makeText(formulariopublicar.this, "Reporte creado correctamente", Toast.LENGTH_SHORT).show();
-                        datosReportes.clear();
                     }else{
                         Toast.makeText(formulariopublicar.this, "Es necesario marcar al menos una casilla", Toast.LENGTH_SHORT).show();
                     }
@@ -206,6 +231,8 @@ public class formulariopublicar extends AppCompatActivity {
                 imagen.setImageResource(R.drawable.fondogyp);
                 txt_gps_prueba.setText("");
                 conImagen = false;
+                Intent i = new Intent (formulariopublicar.this, MainActivity.class);
+                startActivity(i);
             }
         });
     }
@@ -238,9 +265,11 @@ public class formulariopublicar extends AppCompatActivity {
                     //Se obtiene la imagen seleccionada
                     imgUri = data.getData();
                     //Indicamos que las imagenes se guadaran en la carpeta ImagenesReportes
-                    StorageReference nombreFolder = FirebaseStorage.getInstance().getReference().child("ImagenesReportes");
+                    //StorageReference = nombreFolder = FirebaseStorage.getInstance().getReference().child("ImagenesReportes");
+                    nombreFolder = FirebaseStorage.getInstance().getReference().child("ImagenesReportes");
                     //Se establece el nombre de la imagen
-                    StorageReference nombreImagen = nombreFolder.child("imagen"+imgUri.getLastPathSegment() + System.currentTimeMillis()/1000);
+                    //StorageReference = nombreImagen = nombreFolder.child("imagen"+imgUri.getLastPathSegment() + System.currentTimeMillis()/1000);
+                    nombreImagen = nombreFolder.child("imagen"+imgUri.getLastPathSegment() + System.currentTimeMillis()/1000);
                     //obtiene el link de la imagen
                     nombreImagen.putFile(imgUri).addOnSuccessListener(taskSnapshot -> nombreImagen.getDownloadUrl().addOnSuccessListener(imgUri -> {
                         linkImagen = String.valueOf(imgUri);

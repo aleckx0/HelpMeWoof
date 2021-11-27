@@ -1,5 +1,7 @@
 package net.alecks.helpmewoof.Activities;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,11 +13,14 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,6 +28,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.core.Repo;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 import net.alecks.helpmewoof.Adapters.CommentAdapter;
 import net.alecks.helpmewoof.MainActivity;
@@ -110,7 +118,6 @@ public class  Reportes extends AppCompatActivity {
     public String nivelUsuario (){
         ArrayList administradores = new ArrayList<>();
         String nivelUser = "";
-        //MainActivity main = new MainActivity();
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
@@ -156,6 +163,12 @@ public class  Reportes extends AppCompatActivity {
                     }
                     String descripcion = snapshot.child("descripción").getValue().toString();
                     String estado = snapshot.child("estado").getValue().toString();
+                    //Si el reporte esta resuelto se inhabilitan los comentarios
+                    if  (estado.equals("Resuelto")){
+                        editTextComentario.setEnabled(false);
+                        editTextComentario.setHint("Discusión terminada");
+                        publicarComentario.setEnabled(false);
+                    }
                     String imagen = "";
                     if  (snapshot.hasChild("imagen")){
                         imagen = snapshot.child("imagen").getValue().toString();
@@ -237,17 +250,64 @@ public class  Reportes extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
         if (id == R.id.item1){
-            //El reporte se marca como resuelto correctamente
-
-            Toast.makeText(this, "Reporte marcado como resuelto correctamente!", Toast.LENGTH_SHORT).show();
+            //El reporte se marca como resuelto
+            Map<String, Object> estadoActualizado = new HashMap<>();
+            estadoActualizado.put("estado","Resuelto");
+            databaseReference.child("Reportes").child(idReporte).updateChildren(estadoActualizado).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void unused) {
+                    Toast.makeText(Reportes.this, "Reporte marcado como resuelto correctamente!", Toast.LENGTH_SHORT).show();
+                }
+            });
 
             //Desactivar creación de comentarios
             editTextComentario.setEnabled(false);
             editTextComentario.setHint("Discusión terminada");
             publicarComentario.setEnabled(false);
-
         }else if (id == R.id.item2){
-            Toast.makeText(this, "Reporte eliminado", Toast.LENGTH_SHORT).show();
+            //El reporte se elimina
+            AlertDialog.Builder builder = new AlertDialog.Builder(Reportes.this);
+            builder.setTitle("Eliminar Reporte").setMessage("¿Seguro que quiere eliminar el reporte?").setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    databaseReference.child("Reportes").child(idReporte).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                String linkImagen = snapshot.child("imagen").getValue().toString();
+                                FirebaseStorage mFirebaseStorage = FirebaseStorage.getInstance();
+                                StorageReference photoRef = mFirebaseStorage.getReferenceFromUrl(linkImagen);
+                                photoRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception exception) {
+
+                                    }
+                                });
+
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                    databaseReference.child("Reportes").child(idReporte).removeValue();
+                    Toast.makeText(Reportes.this, "Reporte eliminado", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent (Reportes.this, MainActivity.class);
+                    startActivity(i);
+                }
+            }).setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -258,6 +318,22 @@ public class  Reportes extends AppCompatActivity {
             //Si el usuario está registrado No puede eliminar reporte o comentario
             menu.getItem(1).setVisible(false);//0 marcar resuelto - 1 Eliminar reporte
         }
+        //Se comprueba si el reporte esta resuelto para no mostrar la opcion 0
+        databaseReference.child("Reportes").child(idReporte).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String estado = snapshot.child("estado").getValue().toString();
+                    if  (estado.equals("Resuelto")){
+                        menu.getItem(0).setVisible(false);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
         return true;
     }
 }
