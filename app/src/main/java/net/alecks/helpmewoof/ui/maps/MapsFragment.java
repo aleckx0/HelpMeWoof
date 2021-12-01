@@ -48,39 +48,8 @@ public class MapsFragment extends Fragment{
     private ArrayList<Marker> realTimeMarkers = new ArrayList<>();
 
     private void UploadData() {
-/*
-        if (ActivityCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission
-                (getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                    MY_PERMISSIONS_REQUEST_READ_CONTACTS);
 
-            return;
-        }
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(getActivity(), location -> {
-                    // Got last known location. In some rare situations this can be null.
-                    //Log.e("Antes", "Se ecuentra antes");
-                    if (location != null) {
-                        // Logic to handle location object
-                        //Log.e("Latitud: ", +location.getLatitude() + "Longitud: " + location.getLongitude());
-
-                        //Map<String, Object> latlong = new HashMap<>();
-                        //latlong.put("Latitud", location.getLatitude());
-                        //latlong.put("Longitud", location.getLongitude());
-                        //databaseReference.child("reportes").push().setValue(latlong);
-                        //Log.e("Después", "Se ecuentra después");
-                        LatLng lng = new LatLng(location.getLatitude(), location.getLongitude());
-                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(lng, 17.0f));
-                    }
-                });
-
- */
     }
-
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
         @Override

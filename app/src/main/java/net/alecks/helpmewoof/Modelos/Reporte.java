@@ -9,6 +9,7 @@ public class Reporte {
     private String idUsuario;
     private String nivelUsuario;
     private String estado;
+    private String eliminar;
     private ArrayList clasificación;
     private String descripción;
     private String imagen;
@@ -19,11 +20,12 @@ public class Reporte {
 
     }
     //Con imagen
-    public Reporte (String idReporte, String idUsuario, String nivelUsuario, String estado, ArrayList clasificación, String descripción, String imagen, Map coordenadas){
+    public Reporte (String idReporte, String idUsuario, String nivelUsuario, String estado, String eliminar, ArrayList clasificación, String descripción, String imagen, Map coordenadas){
         this.idReporte = idReporte;
         this.idUsuario = idUsuario;
         this.nivelUsuario = nivelUsuario;
         this.estado = estado;
+        this.eliminar = eliminar;
         this.clasificación = clasificación;
         this.descripción = descripción;
         this.imagen = imagen;
@@ -31,11 +33,12 @@ public class Reporte {
         this.timestamp = ServerValue.TIMESTAMP;
     }
     //Sin imagen
-    public Reporte (String idReporte, String idUsuario, String nivelUsuario, String estado, ArrayList clasificación, String descripción, Map coordenadas){
+    public Reporte (String idReporte, String idUsuario, String nivelUsuario, String estado, String eliminar, ArrayList clasificación, String descripción, Map coordenadas){
         this.idReporte = idReporte;
         this.idUsuario = idUsuario;
         this.nivelUsuario = nivelUsuario;
         this.estado = estado;
+        this.eliminar = eliminar;
         this.clasificación = clasificación;
         this.descripción = descripción;
         this.coordenadas = coordenadas;
@@ -73,6 +76,10 @@ public class Reporte {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    public String getEliminar(){return eliminar;}
+
+    public void setEliminar(){this.eliminar = eliminar;}
 
     public ArrayList getClasificación() {
         return clasificación;

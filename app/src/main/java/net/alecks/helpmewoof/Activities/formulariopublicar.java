@@ -11,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -43,6 +44,7 @@ import net.alecks.helpmewoof.R;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class formulariopublicar extends AppCompatActivity {
@@ -70,7 +72,7 @@ public class formulariopublicar extends AppCompatActivity {
     String linkImagen;
     String nombreImagenCamara;
     boolean conImagen;
-
+    String idReporte;
 
     //Metodo onCreate
     @Override
@@ -92,7 +94,7 @@ public class formulariopublicar extends AppCompatActivity {
 
         //Variables para cargar a firebase
         databaseReference = FirebaseDatabase.getInstance().getReference();
-        Map<String, Object> datosReportes = new HashMap<>();
+        //Map<String, Object> datosReportes = new HashMap<>();
 
         //Solicita permisos para el gps
         int permissionCheck = ContextCompat.checkSelfPermission(formulariopublicar.this, Manifest.permission.ACCESS_FINE_LOCATION);
@@ -165,6 +167,9 @@ public class formulariopublicar extends AppCompatActivity {
                         //Se asigna el estado del reporte a Activo
                         String estado = "Activo";
 
+                        //Se asigna el valor de si se puede eliminar despues de 5 minutos
+                        String eliminar = "false";
+
                         //Obtenemos la información de descripción
                         String descripción =  editTextDescripción.getText().toString();
 
@@ -181,7 +186,7 @@ public class formulariopublicar extends AppCompatActivity {
                         }
 
                         //Se guarda el key del reporte
-                        String idReporte = databaseReference.child("Reportes").push().getKey();
+                        idReporte = databaseReference.child("Reportes").push().getKey();
 
                         //Obtenemos el nivel del usuario
                         Reportes reportes = new Reportes();
@@ -198,15 +203,15 @@ public class formulariopublicar extends AppCompatActivity {
                             //Comprobamos si hay imagen
                             if (conImagen){
                                 //Enviar datos de un objeto Reportes a firebase con imagen
-                                Reporte reporte = new Reporte(idReporte, idUsuario, nivelUsuario, estado, clasificación, descripción, linkImagen, coordenadas);
+                                Reporte reporte = new Reporte(idReporte, idUsuario, nivelUsuario, estado, eliminar, clasificación, descripción, linkImagen, coordenadas);
                                 databaseReference.child("Reportes").child(idReporte).setValue(reporte);
+                                Toast.makeText(formulariopublicar.this, "Reporte creado correctamente", Toast.LENGTH_SHORT).show();
                             }else{
                                 //Enviar datos de un objeto Reportes a firebase sin imagen
-                                Reporte reporte = new Reporte(idReporte, idUsuario, nivelUsuario, estado, clasificación, descripción, coordenadas);
+                                Reporte reporte = new Reporte(idReporte, idUsuario, nivelUsuario, estado, eliminar, clasificación, descripción, coordenadas);
                                 databaseReference.child("Reportes").child(idReporte).setValue(reporte);
+                                Toast.makeText(formulariopublicar.this, "Reporte creado correctamente", Toast.LENGTH_SHORT).show();
                             }
-                            Toast.makeText(formulariopublicar.this, "Reporte creado correctamente", Toast.LENGTH_SHORT).show();
-                            datosReportes.clear();
                         }else{
                             Toast.makeText(formulariopublicar.this, "Se necesita acceso a la ubicación", Toast.LENGTH_SHORT).show();
                         }
@@ -216,7 +221,6 @@ public class formulariopublicar extends AppCompatActivity {
                 }else{
                     Toast.makeText(formulariopublicar.this, "Es necesario agregar una descripción", Toast.LENGTH_SHORT).show();
                 }
-
                 //Aqui termina el proceso, debe regresar a pantalla principal y limpiar el formulario
                 editTextDescripción.setText("");
                 if(checkHerido.isChecked()){
@@ -231,8 +235,25 @@ public class formulariopublicar extends AppCompatActivity {
                 imagen.setImageResource(R.drawable.fondogyp);
                 txt_gps_prueba.setText("");
                 conImagen = false;
+
                 Intent i = new Intent (formulariopublicar.this, MainActivity.class);
                 startActivity(i);
+
+                //Temporizador empieza
+                CountDownTimer countDownTimer = new CountDownTimer(500000, 1000) {
+                    public void onTick(long millisUntilFinished) {
+                    }
+                    public void onFinish() {
+                        Map<String, Object> opcionEliminar = new HashMap<>();
+                        opcionEliminar.put("eliminar",true);
+                        databaseReference.child("Reportes").child(idReporte).updateChildren(opcionEliminar).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                            }
+                        });
+                    }
+                };
+                countDownTimer.start();
             }
         });
     }
