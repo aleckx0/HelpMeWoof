@@ -41,4 +41,12 @@
     <string name="iniciar_sesi_n_registrarse">Registrarse</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="por_qu_ya_no_me_aparecen_los_reportes_de_que_se_veian_la_semana_pasada">¿Por qué ya no me aparecen los reportes de que se veian la semana pasada?</string>
+    <string name="los_reportes_resueltos_dejan_de_aparecer_despu_s_de_72hrs_de_que_son_marcados_como_resueltos_si_un_reporte_que_viste_antes_no_aparece_lo_m_s_seguro_que_se_haya_resuelto">Los reportes resueltos dejan de aparecer después de 72hrs de que son marcados como resueltos, si un reporte que viste antes no aparece lo más seguro que se haya resuelto :).</string>
+    <string name="preguntas_frecuentes">Preguntas Frecuentes</string>
+    <string name="puedo_publicar_reportes_sin_crear_una_cuenta">¿Puedo publicar reportes sin crear una cuenta?</string>
+    <string name="si_no_tienes_una_cuenta_solo_puedes_ver_los_reportes_que_hacen_los_demas_y_comentar_de_forma_anonima_en_reportes_de_otros_necesitas_crear_una_cuenta_para_poder_generar_reportes">Si no tienes una cuenta solo puedes ver los reportes que hacen los demas y comentar de forma anonima en reportes de otros. Necesitas crear una cuenta para poder generar reportes.</string>
+    <string name="solo_se_pueden_hacer_reportes_de_perros">¿Solo se pueden hacer reportes de perros?</string>
+    <string name="la_app_est_con_la_intenci_n_de_atender_gatos_y_perros_primordiamente_pero_puedes_reportar_sobre_otros_tipos_de_animales">La app está con la intención de atender gatos y perros primordiamente, pero puedes reportar sobre otros tipos de animales.</string>
+    <string name="contacto_guagua420_help_woof">Contacto: guagua420@help.woof</string>
 </resources>
