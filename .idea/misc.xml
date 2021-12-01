@@ -10,31 +10,44 @@
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/drawable/mapa_ic.xml" value="0.290625" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/drawable/mapa_icono.xml" value="0.290625" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/drawable/nuevo_ic.xml" value="0.1484375" />
+        <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/drawable/nuevo_reporte.xml" value="0.13072916666666667" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/drawable/persona_ic.xml" value="0.26197916666666665" />
+        <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/drawable/side_menu.xml" value="0.290625" />
+        <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/drawable/side_nav_bar.xml" value="0.290625" />
+        <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/drawable/user_icon.xml" value="0.290625" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/activity_auth.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/activity_comentario.xml" value="0.264" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/activity_formulario.xml" value="0.264" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/activity_formulariohistoria.xml" value="0.25104166666666666" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/activity_iniciar_sesion.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/activity_main.xml" value="0.25894736842105265" />
+        <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/activity_menu_lateral.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/activity_registrarse.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/activity_reportes.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/app_bar_main.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/app_bar_menu_lateral.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/content_main.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/content_menu_lateral.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/fragment_first.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/fragment_home.xml" value="0.2644927536231884" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/fragment_mapa_principal.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/fragment_maps.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/fragment_nuevo_reporte.xml" value="0.264" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/fragment_registrarse.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/fragment_second.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/fragment_slideshow.xml" value="0.2644927536231884" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/nav_header_main.xml" value="0.1" />
+        <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/nav_header_menu_lateral.xml" value="0.22871376811594202" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/pruebas.xml" value="0.27447916666666666" />
-        <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/row_comment.xml" value="0.2" />
+        <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/row_comment.xml" value="0.264" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/layout/switch_item.xml" value="0.20260416666666667" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/menu/activity_main_drawer.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/menu/main.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/menu/menu_lateral.xml" value="0.27447916666666666" />
         <entry key="..\:/Users/dell/StudioProjects/HelpMeWoof/app/src/main/res/menu/overflow.xml" value="0.27447916666666666" />
+        <entry key="..\:/Users/pol13/Desktop/HelpMeWoof/app/src/main/res/layout/activity_main.xml" value="0.1598731884057971" />
+        <entry key="..\:/Users/pol13/Desktop/HelpMeWoof/app/src/main/res/layout/nav_header_main.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/pol13/Desktop/HelpMeWoof/app/src/main/res/menu/main.xml" value="0.12708333333333333" />
       </map>
     </option>
   </component>

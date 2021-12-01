@@ -1,7 +1,5 @@
 package net.alecks.helpmewoof.Activities;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -26,13 +25,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 import net.alecks.helpmewoof.Adapters.CommentAdapter;
+import net.alecks.helpmewoof.MainActivity;
 import net.alecks.helpmewoof.Modelos.Comentario;
 import net.alecks.helpmewoof.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class  Reportes extends AppCompatActivity {
     //Componentes del activity
@@ -42,7 +41,6 @@ public class  Reportes extends AppCompatActivity {
     TextView textViewClasificacion3;
     TextView textViewDescripción;
     ImageView imageView;
-    Button eliminar;
     Switch switchEstado;
     EditText editTextComentario;
     Button publicarComentario;
@@ -52,15 +50,11 @@ public class  Reportes extends AppCompatActivity {
     //Base de datos firebase
     DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
-    FirebaseAuth firebaseAuth;
-    FirebaseUser firebaseUser;
     //Variables
-    String idReporte = "-MnHpDg_I3P6ln6cjK32" ;
-    //Reporte reporte = new Reporte();
-    //String idReporte = reporte.getIdReporte();
-    //String nivelUsuario;
+    String idReporte;
     List<Comentario> listaComentario;
     Map<String, Object> datosComentarios = new HashMap<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,32 +71,31 @@ public class  Reportes extends AppCompatActivity {
         publicarComentario = findViewById(R.id.button2);
         editTextComentario = findViewById(R.id.editTexComentario);
         recyclerViewComentario = findViewById(R.id.rv_comment);
-        /*
-        //Toolbar
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
-        */
+
         //Base de datos firebase
+        idReporte = getIntent().getStringExtra("idReporte");
         databaseReference = FirebaseDatabase.getInstance().getReference();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        firebaseAuth = FirebaseAuth.getInstance();
-        firebaseUser = firebaseAuth.getCurrentUser();
 
         //Iniciar recycler view para cargar los comentarios
         iniciarRecyclerViewComentario();
+
         //Muestra el reporte
         cargarReporte();
 
-        /*
+        //Comprobamos el nivel del usuario para mostrar menu toolbar
         if  (nivelUsuario().equals("Administrador")){
-            //Si es administrador muestra opción "Reporte resuelto" y "Eliminar reporte" fata "Eliminar comentario"
+            //Si es administrador muestra opción "Reporte resuelto" y "Eliminar reporte" y "Eliminar comentario"
             Toolbar toolbar = findViewById(R.id.toolbar);
             toolbar.setTitle("");
             setSupportActionBar(toolbar);
         }
-
-         */
+        if  (nivelUsuario() != "Anonimo" & nivelUsuario() != "Administrador"){
+            //Si el usuario está registrado No puede eliminar reporte o comentario
+            Toolbar toolbar = findViewById(R.id.toolbar);
+            toolbar.setTitle("");
+            setSupportActionBar(toolbar);
+        }
 
         //Método click lisener del botón comentar
         publicarComentario.setOnClickListener(new View.OnClickListener() {
@@ -113,44 +106,41 @@ public class  Reportes extends AppCompatActivity {
         });
     }//final del método oncreate
 
-    //Método que retorna los usuarios administradores desde firebase
-    private ArrayList administradoresFirebase(){
-        ArrayList administradores = new ArrayList();
-        databaseReference.child("Administradores").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot ds: snapshot.getChildren()){
-                        String correo = ds.child("correo").getValue().toString();
-                        administradores.add(correo);
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-        return administradores;
-    }
     //Método que retorna el nivel del usuario (Sí es Administrador, Anonimo o Registrado)
-    private String nivelUsuario (){
+    public String nivelUsuario (){
+        ArrayList administradores = new ArrayList<>();
         String nivelUser = "";
-        if  (firebaseUser.isAnonymous()){
+        //MainActivity main = new MainActivity();
+        FirebaseAuth mAuth;
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if(user.isAnonymous()){
             nivelUser = "Anonimo";
-        }else{
-            ArrayList administradores = new ArrayList();
-            administradores = administradoresFirebase();
-            for (int i = 0; i < administradores.size(); i++) {
-                if (firebaseUser.getEmail().equals(administradores.get(i).toString())) {
+            return nivelUser;
+
+        }else if (!user.isAnonymous()){
+            //Si no es anonimo comprobamos si es administrador
+            administradores.add("carolinabermudez99@gmail.com");
+            administradores.add("email08@gmail.com");
+            for (int i=0;i<administradores.size(); i++){
+                if (user.getEmail().equals(administradores.get(i).toString())){
                     nivelUser = "Administrador";
+                    return nivelUser;
                 }
             }
         }
-        if (firebaseUser.isEmailVerified()) {
-            nivelUser = firebaseUser.getDisplayName();
+        if (!user.isAnonymous() & nivelUser != "Administrador"){
+            //Si el nivel de usuario sigue estando vacio quiere decir que es solo un usuario registrado
+            String email = user.getEmail();
+            String[] parts = email.split("@");
+            String nombreUsuario = parts[0];
+            String dominioEmail = parts[1];
+            nivelUser = nombreUsuario;
+            return nivelUser;
         }
         return nivelUser;
     }
+
     //Método que muestra los detalles del reporte desde firebase
     private void cargarReporte(){
         databaseReference.child("Reportes").child(idReporte).addValueEventListener(new ValueEventListener() {
@@ -213,7 +203,6 @@ public class  Reportes extends AppCompatActivity {
                     Comentario comentario = snap.getValue(Comentario.class);
                     listaComentario.add(comentario);
                 }
-                //commentAdapter = new CommentAdapter(getApplicationContext(),listaComentario);
                 commentAdapter = new CommentAdapter(Reportes.this,listaComentario);
                 recyclerViewComentario.setAdapter(commentAdapter);
             }
@@ -227,19 +216,17 @@ public class  Reportes extends AppCompatActivity {
         //Se comprueba que el comentario no este vacio
         boolean editTextVacio = editTextComentario.getText().toString().equals("");
         if (!editTextVacio){
-            //Obtenemos la información de descripción
+            //Obtenemos la información de comentario
             String comentario =  editTextComentario.getText().toString();
-            datosComentarios.put("comentario",comentario);
-            //databaseReference.child("comentarios").push().setValue(datosComentarios);
-            databaseReference.child("Reportes").child(idReporte).child("comentarios").push().setValue(datosComentarios);
+            String nivelUsuario = nivelUsuario();
+            Comentario comentarioModelo = new Comentario(comentario,nivelUsuario);
+            databaseReference.child("Reportes").child(idReporte).child("comentarios").push().setValue(comentarioModelo);
             Toast.makeText(Reportes.this, "Comentario creado correctamente", Toast.LENGTH_SHORT).show();
             editTextComentario.setText("");
             datosComentarios.clear();
-
         }else{
             Toast.makeText(Reportes.this, "Es necesario escribir un comentario", Toast.LENGTH_SHORT).show();
         }
-
     }
     //Método para mostrar y ocultar el menú overflow
     public boolean onCreateOptionsMenu (Menu menu){
@@ -263,5 +250,14 @@ public class  Reportes extends AppCompatActivity {
             Toast.makeText(this, "Reporte eliminado", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public boolean onPrepareOptionsMenu (Menu menu) {
+        //MenuItem item = menu.findItem(R.id.toolbar);
+        if  (nivelUsuario() != "Anonimo" & nivelUsuario() != "Administrador"){
+            //Si el usuario está registrado No puede eliminar reporte o comentario
+            menu.getItem(1).setVisible(false);//0 marcar resuelto - 1 Eliminar reporte
+        }
+        return true;
     }
 }

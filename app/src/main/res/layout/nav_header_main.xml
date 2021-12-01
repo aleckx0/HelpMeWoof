@@ -16,7 +16,7 @@
         android:layout_width="127dp"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="@string/nav_header_title"
+        android:text="Help Me Woof!"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <ImageView
@@ -30,8 +30,8 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="154dp"
+        android:layout_width="268dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="1dp"
-        android:text="@string/nav_header_subtitle" />
+        android:text="Haz el cambio, ayuda al lomito." />
 </LinearLayout>
