@@ -142,13 +142,25 @@ public class MapsFragment extends Fragment{
                         String horario = snapshot.child(dataSnapshot.getKey()).child("Horario").getValue().toString();
                         String tel = snapshot.child(dataSnapshot.getKey()).child("Telefono").getValue().toString();
 
-                        MarkerOptions markerOptions = new MarkerOptions();
-                        Bitmap img = BitmapFactory.decodeResource(getResources(), R.drawable.vet);
-                        Bitmap smallimg = Bitmap.createScaledBitmap(img, 150, 150, false);
-                        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(smallimg);
+                        Boolean amiga = (Boolean) snapshot.child(dataSnapshot.getKey()).child("amiga").getValue();
 
-                        markerOptions.position(new LatLng(Latitud, Longitud)).icon(bitmapDescriptor).title(dataSnapshot.getKey());
-                        markerOptions.title(nombre + " " + horario + " "+ tel);
+                        MarkerOptions markerOptions = new MarkerOptions();
+
+                        if (amiga == true){
+                            Bitmap img = BitmapFactory.decodeResource(getResources(), R.drawable.vet2);
+                            Bitmap smallimg = Bitmap.createScaledBitmap(img, 150, 150, false);
+                            BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(smallimg);
+                            markerOptions.position(new LatLng(Latitud, Longitud)).icon(bitmapDescriptor).title(dataSnapshot.getKey());
+                            markerOptions.title(nombre + " " + horario + " "+ tel);
+
+                        } else {
+                            Bitmap img = BitmapFactory.decodeResource(getResources(), R.drawable.vet);
+                            Bitmap smallimg = Bitmap.createScaledBitmap(img, 150, 150, false);
+                            BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(smallimg);
+                            markerOptions.position(new LatLng(Latitud, Longitud)).icon(bitmapDescriptor).title(dataSnapshot.getKey());
+                            markerOptions.title(nombre + " " + horario + " "+ tel);
+
+                        }
 
                         boolean isReporte = false;
                         Marker m = mMap.addMarker(markerOptions);
